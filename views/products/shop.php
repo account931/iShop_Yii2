@@ -1,0 +1,199 @@
+<?php
+
+use yii\helpers\Html;
+use yii\grid\GridView;
+
+/* @var $this yii\web\View */
+/* @var $searchModel app\models\Products_Search */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+
+$this->title = 'Shop';
+$this->params['breadcrumbs'][] = $this->title;
+?>
+<div class="products-index">
+
+    <h1><?= Html::encode($this->title) ?></h1>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
+    
+	
+	
+	
+	
+	
+	<!--  Start mine FULL Screen Menu Appear from Left -->
+<!-- Full price lisdt is generated in myCore.js -> openCalcSidePagewithCart() -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="#">About</a>
+  <a href="#">Services</a>
+  <a href="#">Clients</a>
+  <a href="#">Contact</a>
+  </br><p id="fullCartList">V</p>
+  </br><p> Total: <span id="totalSumCartFull"> 0 UAH</span></p>
+</div>
+
+</br></br></br>
+<!--<h2>Animated Sidenav Example Full Width</h2>-->
+<!--<p>Click on the element below to open the navigation menu.</p>-->
+<span style="font-size:30px;cursor:pointer" id="openSidePagewithCart" onclick="openNav()">&#9776; open</span>
+
+<script>
+function openNav() {
+    document.getElementById("mySidenav").style.width = "100%";
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+}
+</script>
+<!--end mine Full Screen Menu-->
+
+
+
+
+
+
+<!--Start Mine Small Modal, when u click on product from list, Box uses src="js/modalBox.js-->
+<div>
+<h2>iShop with Animated Modal incl Header and Footer</h2>
+
+<!-- Trigger/Open CART (was The Modal) -->
+<button class="myCart" >Open Cart</button>
+<!--<button class="myBtn" >Open Cart</button>-->
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="close">&times;</span>
+      <h2>Modal Header</h2>
+    </div>
+	
+    <div class="modal-body">
+	  <!--<div class="container ff"> -->  <!-- for bootstrap-->
+	  
+	  <div class="row row1"> <!--Bstrap inj-->
+	  
+        <div class="col-sm-5"> 
+          <p>Product Name: &nbsp; <span id="productName" class="prName"></span> </p>
+          <p>Some other text...</p> </br></br>
+           <p><img src="images/cart.png" style="width:10%;"/></p>
+          <!--<p>Some other text...</p>	-->	  
+	    </div>
+		
+        <div class="col-sm-3">
+	      <p>Price:<span id="productPrice"></span> </p>
+	    </div>
+		
+		<div class="col-sm-2">
+	      <p>Pcs: &nbsp; <span id="productPcs">0</span> <p>
+		  <button type="button" class="btn btn-success" id="plus"> + </button>
+		  <button class="btn btn-danger" id="minus"> - </button>
+	    </div>
+		
+		<div class="col-sm-2">
+	      <p>Total &nbsp; <span id="productTotal">0 </span> UAH <p>
+	    </div>
+		
+	  </div> <!--class="row1">-->
+	  
+	  <div class="row row2">
+	    <div class="col-sm-10"></div>
+		<div class="col-sm-2">
+		  <!--<button class="btn" id="cancelThis"> Cancel</button>-->
+		  <button class="btn btn-info" id="addToCart"> Add to cart </button>
+		</div>
+	  </div> <!--class="row2">-->
+	  
+	 <!--</div>--> <!--<div class="container ff" --for bootstrap--> 
+    </div>
+    <div class="modal-footer">
+      <h3>Modal Footer</h3>
+    </div>
+  </div>
+
+</div>
+</div>
+<script>
+
+</script>
+<!-- End Mine Modal Box-->
+
+
+
+
+
+
+<!------------------------------Confirm order modal box------------------------------->
+<!-- The Modal -->
+<div id="myModalConfirm" class="modalConf">
+
+  <!-- Modal content -->
+  <div class="modal-contentZ">
+    <span class="closeConfirm">&times;</span>
+	<center>
+	<img src="images/cart.png" style="width:30%;"/>
+	</center>
+    </br></br><p>Order has been added</p></br>
+  </div>
+
+</div>
+<!--------------------------------Confirm order modal box------------------------------->
+
+
+
+
+
+
+
+
+<!--<div class="container">-->
+
+  </br>
+  <div class="list-group"> <!-- should be replaced by SQL-->
+    
+    <a href="#" class="list-group-item list-group-item-success  myBtn" id="Dnb-12.55">   <div class="row"><div class="col-sm-5"> <img class="prod-img" src="images/product_icon.png" alt=""/> First item : <b>Drum'n'bass LP </b> <br><img class="packaging" src="images/packaging.png"/>   </div><div class="col-sm-5 textX">Product text description <br>Price details</div></div></a>
+	<a href="#" class="list-group-item list-group-item-info     myBtn" id="Dub-7.2">     <div class="row"><div class="col-sm-5"> <img class="prod-img" src="images/product_icon.png" alt=""/> Second item :<b>Dub LP         </b> <br><img class="packaging" src="images/packaging.png"/>   </div><div class="col-sm-5 textX">Product text description <br>Price details</div></div></a>
+	<a href="#" class="list-group-item list-group-item-warning  myBtn" id="Techno-1.4">  <div class="row"><div class="col-sm-5"> <img class="prod-img" src="images/product_icon.png" alt=""/>Third item :  <b>Techno LP      </b> <br><img class="packaging" src="images/packaging.png"/>   </div><div class="col-sm-5 textX">Product text description <br>Price details</div></div></a>
+	<a href="#" class="list-group-item list-group-item-danger   myBtn" id="Neuro-17.33"> <div class="row"><div class="col-sm-5"> <img class="prod-img" src="images/product_icon.png" alt=""/>Fourth item : <b>Neurofunk LP   </b> <br><img class="packaging" src="images/packaging.png"/>   </div><div class="col-sm-5 textX">Product text description <br>Price details</div></div></a>
+    
+	<a href="#" class="list-group-item list-group-item-success  myBtn" id="Obolon-9.35">        <div class="row"><div class="col-sm-5"> <img class="prod-img" src="images/product_icon.png" alt=""/>  <b> Obolon 0.5L       </b> <br><img class="packaging" src="images/packaging.png"/>   </div><div class="col-sm-5 textX">Product text description <br>Price details</div></div></a>
+	<a href="#" class="list-group-item list-group-item-info  myBtn"    id="StellaArtois-17.05"> <div class="row"><div class="col-sm-5"> <img class="prod-img" src="images/product_icon.png" alt=""/>  <b>Stella Artois 0.33L</b> <br><img class="packaging" src="images/packaging.png"/>   </div><div class="col-sm-5 textX">Product text description <br>Price details</div></div></a>
+    <a href="#" class="list-group-item list-group-item-warning  myBtn" id="Staropramen-21.85">  <div class="row"><div class="col-sm-5"> <img class="prod-img" src="images/product_icon.png" alt=""/>  <b>Staropramen 1L     </b> <br><img class="packaging" src="images/packaging.png"/>   </div><div class="col-sm-5 textX">Product text description <br>Price details</div></div></a>
+    <a href="#" class="list-group-item list-group-item-danger  myBtn"  id="Heineken-11.4">      <div class="row"><div class="col-sm-5">  <img class="prod-img" src="images/product_icon.png" alt=""/> <b>Heineken 0.5L      </b> <br><img class="packaging" src="images/packaging.png"/>   </div><div class="col-sm-5 textX">Product text description <br>Price details</div></div></a>
+
+	
+	<!---OLD-->
+	<br><br>
+	<a href="#" class="list-group-item list-group-item-success  myBtn" id="Dnb-12.55"><img class="prod-img" src="images/product_icon.png" alt=""/> First item : Drum'n'bass LP <a>
+	<a href="#" class="list-group-item list-group-item-info     myBtn" id="Dub-7.2"> <img class="prod-img" src="images/product_icon.png" alt=""/> Second item : Dub LP  </a>
+	<a href="#" class="list-group-item list-group-item-warning  myBtn" id="Techno-1.4"> <img class="prod-img" src="images/product_icon.png" alt=""/>Third item : Techno LP </a>
+	<a href="#" class="list-group-item list-group-item-danger   myBtn" id="Neuro-17.33"> <img class="prod-img" src="images/product_icon.png" alt=""/>Fourth item : Neurofunk LP  </a>
+    
+	<a href="#" class="list-group-item list-group-item-success  myBtn" id="Obolon-9.35"><img class="prod-img" src="images/product_icon.png" alt=""/>  Obolon 0.5L  </a>
+	<a href="#" class="list-group-item list-group-item-info  myBtn"    id="StellaArtois-17.05"> <img class="prod-img" src="images/product_icon.png" alt=""/> Stella Artois 0.33L  </a>
+    <a href="#" class="list-group-item list-group-item-warning  myBtn" id="Staropramen-21.85"> <img class="prod-img" src="images/product_icon.png" alt=""/> Staropramen 1L  </a>
+    <a href="#" class="list-group-item list-group-item-danger  myBtn"  id="Heineken-11.4"> <img class="prod-img" src="images/product_icon.png" alt=""/> Heineken 0.5L  </a>
+	<!---OLD-->
+	
+  </div>
+  
+  
+  <!--<h3>Navbar Forms</h3>
+  <p>Use the .navbar-form class to vertically align form elements (same padding as links) inside the navbar.</p>
+  <p>The .input-group class is a container to enhance an input by adding an icon, text or a button in front or behind it as a "help text".</p>
+  -->
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</div>

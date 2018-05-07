@@ -24,6 +24,8 @@ class AppAsset extends AssetBundle
 		'css/modalBox.css', //ishop
 		'css/myStyle.css', //ishop
 		'css/sideNavFullScreenMenu.css', //ishop
+		'css/yii2_mine.css', //yii2 mine
+		
     ];
     public $js = [
 	    'js/modalBox.js', //ishop

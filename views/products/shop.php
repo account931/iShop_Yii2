@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
+use app\models\Products;
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\Products_Search */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -150,6 +152,24 @@ function closeNav() {
 
 
 
+    <!--------------------------------Content by Yii2---------------------------------->
+	<?php
+	    echo Html::img(Yii::$app->getUrlManager()->getBaseUrl().'/images/cog.jpg' , $options =["id"=>"","marginleft"=>"3%","class"=>"rotateX","width"=>"9%","alt"=>"click","title"=>"click to add a  new  one"] );
+	    echo Html::encode("Start Yii2");
+	?>
+	<div class="list-group">
+	
+	<?php
+		Products::displayProducts();
+	?>
+     </div>
+    <!--------------------------------END Content by Yii2------------------------------->
+
+
+	
+	
+	
+
 <!--<div class="container">-->
 
   </br>
@@ -157,7 +177,7 @@ function closeNav() {
     
     <a href="#" class="list-group-item list-group-item-success  myBtn" id="Dnb-12.55">   <div class="row"><div class="col-sm-5"> <img class="prod-img" src="images/product_icon.png" alt=""/> First item : <b>Drum'n'bass LP </b> <br><img class="packaging" src="images/packaging.png"/>   </div><div class="col-sm-5 textX">Product text description <br>Price details</div></div></a>
 	<a href="#" class="list-group-item list-group-item-info     myBtn" id="Dub-7.2">     <div class="row"><div class="col-sm-5"> <img class="prod-img" src="images/product_icon.png" alt=""/> Second item :<b>Dub LP         </b> <br><img class="packaging" src="images/packaging.png"/>   </div><div class="col-sm-5 textX">Product text description <br>Price details</div></div></a>
-	<a href="#" class="list-group-item list-group-item-warning  myBtn" id="Techno-1.4">  <div class="row"><div class="col-sm-5"> <img class="prod-img" src="images/product_icon.png" alt=""/>Third item :  <b>Techno LP      </b> <br><img class="packaging" src="images/packaging.png"/>   </div><div class="col-sm-5 textX">Product text description <br>Price details</div></div></a>
+	<a href="#" class="list-group-item list-group-item-info  myBtn" id="Techno-1.4">  <div class="row"><div class="col-sm-5"> <img class="prod-img" src="images/product_icon.png" alt=""/>Third item :  <b>Techno LP      </b> <br><img class="packaging" src="images/packaging.png"/>   </div><div class="col-sm-5 textX">Product text description <br>Price details</div></div></a>
 	<a href="#" class="list-group-item list-group-item-danger   myBtn" id="Neuro-17.33"> <div class="row"><div class="col-sm-5"> <img class="prod-img" src="images/product_icon.png" alt=""/>Fourth item : <b>Neurofunk LP   </b> <br><img class="packaging" src="images/packaging.png"/>   </div><div class="col-sm-5 textX">Product text description <br>Price details</div></div></a>
     
 	<a href="#" class="list-group-item list-group-item-success  myBtn" id="Obolon-9.35">        <div class="row"><div class="col-sm-5"> <img class="prod-img" src="images/product_icon.png" alt=""/>  <b> Obolon 0.5L       </b> <br><img class="packaging" src="images/packaging.png"/>   </div><div class="col-sm-5 textX">Product text description <br>Price details</div></div></a>

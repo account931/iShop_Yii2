@@ -132,13 +132,25 @@ class ProductsController extends Controller
 	
 	
 	
-	
+	// **************************************************************************************
+    // **************************************************************************************
+    //                                                                                     **
 	
 	public function actionShop()
     {
+		 $query=Products::find()->orderBy ('pr_id DESC') /*->andFilterWhere(['like', 'sData_text', Yii::$app->getRequest()->getQueryParam('q')])*/  /*->where(['sData_text'=>Yii::$app->getRequest()->getQueryParam('q') ])*/ ->all();
 
         return $this->render('shop', [
-            /*'model' => $model,*/
+               'query' => $query, //is in model
         ]);
     }
+	// **                                                                                  **
+    // **************************************************************************************
+    // **************************************************************************************  
+	
+	
+	
+	
+	
+	
 }

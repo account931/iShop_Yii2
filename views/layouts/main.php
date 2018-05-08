@@ -99,10 +99,10 @@ AppAsset::register($this);
 	    <div class="topnav" id="myTopnav">
 			<?= Html::a( "Home", ['/site/index', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'activeZ', 'id'=>'home', 'title' => 'Go home',] ) ?>
             <!--<a href="#home" class="active" id="home">Home</a>-->
-			<?= Html::a( "Shop", ['/products/index', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'', 'title' => 'Go home',] ) ?>
+			<?= Html::a( "PConrol", ['/products/index', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'', 'title' => 'Go home',] ) ?>
 			<?= Html::a( "About", ['/site/about', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'', 'title' => 'About us',] ) ?>
 			<?= Html::a( "Contact", ['/site/contact', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'', 'title' => 'Contact us',] ) ?>
-		    <?= Html::a( "Login", ['/site/login', 'period' => "",   ] /* $url = null*/, $options = ['title' => 'Login',] ) ?>
+		    <?= Html::a( "iShop", ['/products/shop', 'period' => "",   ] /* $url = null*/, $options = ['title' => 'Login',] ) ?>
 			
 			<?php 
 			if (Yii::$app->user->isGuest) {

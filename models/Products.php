@@ -55,20 +55,20 @@ class Products extends \yii\db\ActiveRecord
 	
 	
 	
-	//-------
+	// Display all products in products/shop.php action-------
 	public static function displayProducts()
 	{
 		$colorClass = array("list-group-item-success", "list-group-item-info", "list-group-item-warning", "list-group-item-danger"); // bootstrap Classes
-		$colorCount = 0;
+		$colorCount = 0; // counter to change Bstrap classes
 		
 		$query=Products::find()->orderBy ('pr_id DESC') /*->andFilterWhere(['like', 'sData_text', Yii::$app->getRequest()->getQueryParam('q')])*/  /*->where(['sData_text'=>Yii::$app->getRequest()->getQueryParam('q') ])*/ ->all();
 
 	    foreach ($query as $dataFromCtrl) {
 			//echo "<br>" . $dataFromCtrl->p r_name;
 			echo '<a href="#" class="list-group-item myBtn ' . $colorClass[$colorCount]  . ' " id='  .  $dataFromCtrl->pr_name . '-' .$dataFromCtrl->pr_price .'>';   
-			echo '<div class="row"><div class="col-sm-5"> <img class="prod-img" src="images/product_icon.png" alt=""/> First item : <b>' . $dataFromCtrl->pr_name . '</b> <br>';
+			echo '<div class="row"><div class="col-sm-5"> <img class="prod-img" src="images/product_icon.png" alt=""/> Item : <b>' . $dataFromCtrl->pr_name . '</b> <br>';
 			echo '<img class="packaging" src="images/packaging.png"/>   </div>';
-			echo '<div class="col-sm-5 textX">Product text description <br>Price details : ' .$dataFromCtrl->pr_price. ' UAH</div></div></a>';
+			echo '<div class="col-sm-5 textX">Product text description: ' . $dataFromCtrl->pr_description . '<br>Price details : ' .$dataFromCtrl->pr_price. ' UAH</div></div></a>';
 			
 			if ($colorCount < 3) {
 				$colorCount++;

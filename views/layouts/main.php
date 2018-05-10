@@ -102,7 +102,8 @@ AppAsset::register($this);
 			<?= Html::a( "PConrol", ['/products/index', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'', 'title' => 'Go home',] ) ?>
 			<?= Html::a( "About", ['/site/about', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'', 'title' => 'About us',] ) ?>
 			<?= Html::a( "Contact", ['/site/contact', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'', 'title' => 'Contact us',] ) ?>
-		    <?= Html::a( "iShop", ['/products/shop', 'period' => "",   ] /* $url = null*/, $options = ['title' => 'Login',] ) ?>
+		    <?= Html::a( "iShop", ['/products/shop', 'period' => "",   ] /* $url = null*/, $options = ['title' => 'Shop',] ) ?>
+			<?= Html::a( "CheckOut", ['/products/checkout', 'period' => "",   ] /* $url = null*/, $options = ['title' => 'Shop',] ) ?>
 			
 			<?php 
 			if (Yii::$app->user->isGuest) {
@@ -188,7 +189,7 @@ AppAsset::register($this);
 	<!-- Left from original-->
 	<footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; Dima F / <?= date('Y') ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>

@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+use app\models\ProductUserInfoForm;
 /**
  * ProductsController implements the CRUD actions for Products model.
  */
@@ -157,9 +158,11 @@ class ProductsController extends Controller
 	
 	public function actionCheckout()
     {
-
+        
+		$searchModel = new ProductUserInfoForm();
+		
         return $this->render('checkout', [
-               //'query' => $query, //is in model
+               'searchModel' => $searchModel, //is in model
         ]);
     }
 	// **                                                                                  **

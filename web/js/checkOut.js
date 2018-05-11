@@ -87,20 +87,20 @@ $(document).ready(function(){
 	function buildOrderList() 
 	{
 	//alert(JSON.stringify(productsObject, null, 4)); //to alert OBJECT
-        var finalText = "<div class='container' style='word-wrap: break-word;'>";  // word-wrap: break-word to prevent text overlapping
+        var finalText = "<div class='container ' style='word-wrap: break-word;'>";  // word-wrap: break-word to prevent text overlapping
 		for (var key in productsObject) {
 			
 			var addID = key; // alert (addID);
 			finalText = finalText + 
 			            "<div class='row'>" +
-						"<div class='col-sm-4 col-xs-2'>" + key + "</div> " +
-						"<div class='col-sm-2 col-xs-2'>" + productsObject[key]['quantity'] + "</div> " +
+						"<div class='col-sm-4 col-xs-2 '>" + key + "</div> " +
+						"<div class='col-sm-2 col-xs-2 '>" + productsObject[key]['quantity'] + "</div> " +
 					    //"<div class='col-sm-1 col-xs-2'><button type='button' class='btn btn-success fullCartPlus' id=' "  + addID + "_plus'> + </button></div>" +
 						//"<div class='col-sm-1 col-xs-2'><button class='btn btn-danger fullCartMinus'               id=' "  + addID + "_minus'> - </button>" + "</div>" +
-						"<div class='col-sm-2 col-xs-2'>" + productsObject[key]['price'] + "</div> " +
-						"<div class='col-sm-2 col-xs-2'>" + substringSum (productsObject[key]['quantity'] * productsObject[key]['price']) +
+						"<div class='col-sm-2 col-xs-2 '>" + productsObject[key]['price'] + "</div> " +
+						"<div class='col-sm-4 col-xs-4 '>" + substringSum (productsObject[key]['quantity'] * productsObject[key]['price']) +
 						"</div>" +
-						"</div></br>";
+						"</div><hr class='bordX '>";
 		}
 		finalText = finalText + "</div>";
 		

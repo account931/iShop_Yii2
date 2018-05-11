@@ -1,5 +1,5 @@
 <?php
-//Search model for Support CR's knowledge base
+//My model (No SQL DB connection) for User Information input in view/products/checkout.php
 namespace app\models;
 use Yii;
 use yii\base\Model;
@@ -7,7 +7,9 @@ use yii\base\Model;
 //Search form for searching
 class ProductUserInfoForm extends Model
 {
-    public $q;
+    public $username;
+	public $mobile; // without declare it crashes
+    public $address; // without declare it crashes
    
     private $_user = false;
 	
@@ -19,9 +21,11 @@ class ProductUserInfoForm extends Model
         return [
 		
 		 // username and password are both required
-            [['q', ], 'required'],
+            [['username', 'mobile','address'], 'required'], //required fields
             
-            ['q', 'string', 'message'=>'your text'],
+            ['q', 'string', 'message'=>'Wrong name'],
+			['mobile', 'number', 'message'=>' Integers Only'],
+			['username', 'match', 'pattern' => '/^[a-z]\w*$/i']
            
         ];
     }
@@ -30,6 +34,7 @@ class ProductUserInfoForm extends Model
     {
         return [
             'q' => 'Name',
+			'mobile' => 'Phone number',
             
         ];
     }

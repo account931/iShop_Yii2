@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\ActiveForm;
+use yii\widgets\Pjax;
 
 //Register my custom css/js Asset Bundle for this View only(detailed instruction in -> assets/CheckOutAssetOnly.php)
 use app\assets\CheckOutAssetOnly; // using my custom asset to use modal.js/mycore.js Only in this View
@@ -17,7 +18,23 @@ $this->title = 'Check_Out';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
+<style>
+.bordX {
+    border: 1px solid #000000;
 
+}
+</style>
+
+	
+
+	
+
+	
+	
+	
+	
+	
+		
 <div class="checkout-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -31,7 +48,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <br><br>
 	
 	
-	
+	<h2><?= Html::encode("Your orders") ?></h2>
+	<br><br>
 	
 	
 	    <!---------------------User's order list from JS object, filled with checkout.php------------->
@@ -50,20 +68,56 @@ $this->params['breadcrumbs'][] = $this->title;
 		<div class="checkUserContactForm">
 		    <h2><?= Html::encode('Customer Check-out information') ?></h2>
 			
+			
+			
+			
 		    <?php
             // Start if  Person is  LOGGED-------
             // **************************************************************************************
             // **************************************************************************************
             //                                                                                     **
 			
-			$form = ActiveForm::begin(); ?>
+			//$searchModel - is a My model derived in controller from models/ProductUserInfoForm (No SQL DB connection) for User Information input in view/products/checkout.php
+			 Pjax::begin(); 
+			 
+			 if (Yii::$app->user->isGuest){ $d = "Guest";} else {$d = Yii::$app->user->identity->username;} // Check if Guest or not and put the ID to form
+			 
+			 
+			 // Form Start--------------------------------------------------------------------------------------
+			$form =  ActiveForm::begin([
+                        'action' => [''],
+                        //'method' => 'get',
+                        'options' => ['id' => 'myForm', 'enableAjaxValidation' => 'true',]
+                        ]); ?>
 
-            <?= $form->field($searchModel, 'q')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($searchModel, 'username')->textInput(['maxlength' => true, 'value'=>$d]) ?>
+			<?= $form->field($searchModel, 'mobile')->textInput(['maxlength' => true]) ?>
+			<?= $form->field($searchModel, 'address')->textarea(['rows' => 3]) ?> 
 
             <div class="form-group">
-                <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+                <?= Html::submitButton('Send', ['class' => 'btn btn-success', 'id'=>'submit_id']) ?>
+				
+				
+			<?php echo	"<br><br>" . Html::a('Your Link name','products/action', [
+                            'title' => Yii::t('yii', 'Close'),
+                            'onclick'=>"$('#close').dialog('open');//for jui dialog in my page
+                            $.ajax({
+                                type     :'POST',
+                                cache    : false,
+                                url  : 'products/action',
+                                success  : function(response) {
+                                    $('#close').html(response);
+                                }
+                            });return false;",
+                        ]);
+				?>
             </div>
-            <?php ActiveForm::end();
+            <?php ActiveForm::end(); 
+			 // END Form ----------------------------------------------------------------------------------------
+			 
+			Pjax::end(); 
+			
+			
 			
 	
             if (!Yii::$app->user->isGuest){
@@ -86,6 +140,40 @@ $this->params['breadcrumbs'][] = $this->title;
 		
 		
 		
-		
-   
 </div> <!-- <div class="checkout-index">-->
+
+
+
+
+
+
+
+<?php 
+	//My working JS Register
+	//Checks in JS if the Validation runs fine 
+	$this->registerJs( <<< EOT_JS_CODE
+
+  // JS code here
+   $("#myForm").on("afterValidate", function (event, messages) {
+       // Now you can work with messages by accessing messages variable
+       //var attributes = $(this).data().attributes; // to get the list of attributes that has been passed in attributes property
+       //var settings = $(this).data().settings; // to get the settings
+       //alert (attributes);
+  
+       var form = $(this);
+	   if (form.find('.has-error').length ) { 
+	       alert("Validate failed"); 
+	   } else { 
+	       alert("Validate OK"); 
+		   // runs ajax here
+	   } 
+});
+// END JS code here	
+
+	
+
+EOT_JS_CODE
+);
+  ////any spaces before EOT_JS_CODE will cause the crash
+	?>
+

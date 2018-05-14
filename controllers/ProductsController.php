@@ -9,12 +9,14 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-use app\models\ProductUserInfoForm;
+use app\models\Produc_Check_out_UserInfoForm; //My model (No SQL DB connection) for User Information input in view/products/checkout.php
 /**
  * ProductsController implements the CRUD actions for Products model.
  */
 class ProductsController extends Controller
 {
+	
+	
     /**
      * @inheritdoc
      */
@@ -30,6 +32,25 @@ class ProductsController extends Controller
         ];
     }
 
+	
+	
+	
+	public function accessRules() {
+    return array(
+        array(
+            'allow',
+            'actions' => array('getajaxorderdata', 'checkout'),
+            'users'   => array('*'),
+        ),
+    );
+}
+	
+	
+	
+	
+	
+	
+	
     /**
      * Lists all Products models.
      * @return mixed
@@ -158,8 +179,8 @@ class ProductsController extends Controller
 	
 	public function actionCheckout()
     {
-        
-		$searchModel = new ProductUserInfoForm();
+        //My model (No SQL DB connection) for User Information input in view/products/checkout.php
+		$searchModel = new Produc_Check_out_UserInfoForm();
 		
         return $this->render('checkout', [
                'searchModel' => $searchModel, //is in model
@@ -171,6 +192,74 @@ class ProductsController extends Controller
 
 
 
+	
+	
+	// Gets Ajax data from User check out order
+	// **************************************************************************************
+    // **************************************************************************************
+    //                                                                                     **
+	
+	public function actionGetajaxorderdata()
+    {
+		
+		
+	/*	if (Yii::$app->request->isAjax) {
+    $data = Yii::$app->request->post();
+   
+	 $search = explode(":", $data['searchby']);
+	 $search = $searchname[0];
+	 
+    \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    return [
+        'search' => $search,
+        'code' => 100,
+    ];
+  }
+		*/
+		
+		
+	// check if POST request	
+        $dataZ = Yii::$app->request->post();
+            if (isset($dataZ)) {
+			
+                if (Yii::$app->request->isAjax) { 
+				    $test = "Ajax Worked, recognized!";
+				} else {
+                    $test = "Ajax Worked, not recognized!";
+				}
+            } else {
+                $test = "Ajax failed 100%";
+            }
+
+		   $searchname = $_POST['searchname']; // gets name from js ajax
+		   $controller= $_POST['controller']; // gets name from js ajax
+		   
+		   
+         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+          return [
+             'result_status' => $test, // return ajx status
+             'code' => 100,
+		     'name' => $searchname,     // test name 
+			 'controller' => $controller,     // csrf
+          ]; 
+		
+		
+		
+
+	
+		    /*return $this->render('ajax', [
+               //'searchModel' => $searchModel, //is in model
+			   'ress' => $search , //is in model
+        ]);*/
+		
+		
+    }
+	// **                                                                                  **
+    // **************************************************************************************
+    // **************************************************************************************  
+	
+	
+	
 
 
 

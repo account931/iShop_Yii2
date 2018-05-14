@@ -149,28 +149,69 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 <?php 
+
+$URL =Yii::$app->request->baseUrl. "/index.php?r=products/getajaxorderdata";   //WORKING,  gets the url to send ajax, defining it in  $ajax causes routing to 404, Not found, as the url address does not render correctly
+//url: 'http://localhost/iShop_yii/yii-basic-app-2.0.15/basic/web/index.php?r=products/getajaxorderdata',  // the correct address sample for ajax
+
+$Controller = Yii::$app->controller->id;
+
 	//My working JS Register
 	//Checks in JS if the Validation runs fine 
 	$this->registerJs( <<< EOT_JS_CODE
 
-  // JS code here
-   $("#myForm").on("afterValidate", function (event, messages) {
+  // JS code here   //afterValidate
+   $("#myForm").on("beforeSubmit", function (event, messages) {
        // Now you can work with messages by accessing messages variable
        //var attributes = $(this).data().attributes; // to get the list of attributes that has been passed in attributes property
        //var settings = $(this).data().settings; // to get the settings
        //alert (attributes);
   
        var form = $(this);
-	   if (form.find('.has-error').length ) { 
+	   if (form.find('.has-error').length ) {  //if validation failed
+	   
 	       alert("Validate failed"); 
+		   return false;  //prevent submitting and reload
+		   
 	   } else { 
-	       alert("Validate OK"); 
-		   // runs ajax here
+	   
+	       alert("Validate OK");  //alert(<?php echo Yii::$app->request->baseUrl?> +"/products/getajaxorderdata" );
+		    // runs ajax here
+			//var data = $(this).serialize();
+			var data = "This";
+            $.ajax({
+				    //url      : '<?php echo Yii::app()->createUrl("products/getajaxorderdata");?>',
+				  url: '$URL',  //WORKING
+				//url: form.attr('getajaxorderdata'),
+                
+                type: 'post',
+				// dataType : "html",
+				//dataType:'json', // use JSON
+               
+			    //passing the data to ajax
+				data: {
+                    controller : '$Controller ',
+				    //_csrf : '<?= Yii::$app->request->csrfToken; ?>',
+				    searchname : 'Dima',
+                },
+                success: function(res){
+                    console.log(res);
+				    alert (res);
+				    alert (res.name); 
+					alert (res.result_status);
+				    textMine = res.result_status + "<br> Current Controller: " + res.controller; // formate the anwer to html
+					//thml with animation
+					$('.checkout-index').stop().fadeOut("slow",function(){  $('.checkout-index').html(textMine) }).fadeIn(2000);
+                },
+                error: function(){
+                     alert('Error from View!');
+                }
+            });
+			// END runs ajax here
+		    return false; //prevent reloading/submitting
+		  
 	   } 
-});
-// END JS code here	
-
-	
+  });
+  // END JS code here		
 
 EOT_JS_CODE
 );

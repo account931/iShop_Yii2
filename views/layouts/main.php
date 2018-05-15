@@ -99,11 +99,13 @@ AppAsset::register($this);
 	    <div class="topnav" id="myTopnav">
 			<?= Html::a( "Home", ['/site/index', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'activeZ', 'id'=>'home', 'title' => 'Go home',] ) ?>
             <!--<a href="#home" class="active" id="home">Home</a>-->
-			<?= Html::a( "PConrol", ['/products/index', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'', 'title' => 'Go home',] ) ?>
+			<?= Html::a( "PControlrol", ['/products/index', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'', 'title' => 'Go home',] ) ?>
 			<?= Html::a( "About", ['/site/about', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'', 'title' => 'About us',] ) ?>
 			<?= Html::a( "Contact", ['/site/contact', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'', 'title' => 'Contact us',] ) ?>
 		    <?= Html::a( "iShop", ['/products/shop', 'period' => "",   ] /* $url = null*/, $options = ['title' => 'Shop',] ) ?>
 			<?= Html::a( "CheckOut", ['/products/checkout', 'period' => "",   ] /* $url = null*/, $options = ['title' => 'Shop',] ) ?>
+			<?= Html::a( "Placed", ['/products/checkout', 'period' => "",   ] /* $url = null*/, $options = ['title' => 'Shop',] ) ?>
+			<?= Html::a( "Admin", ['/products/checkout', 'period' => "",   ] /* $url = null*/, $options = ['title' => 'Shop',] ) ?>
 			
 			<?php 
 			if (Yii::$app->user->isGuest) {
@@ -113,8 +115,9 @@ AppAsset::register($this);
                 echo '<a>'
                     . Html::beginForm(['/site/logout'], 'post')
                     . Html::submitButton(
+					
                         'Logout (' . Yii::$app->user->identity->username . ')',
-                        ['class' => 'btn btn-link logout']
+                        ['class' => ' btn-link logout']   //['class' => 'btn btn-link logout']
                     )
                     . Html::endForm()
                     . '</a>';

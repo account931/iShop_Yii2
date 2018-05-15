@@ -5,6 +5,8 @@ use yii\grid\GridView;
 use yii\widgets\ActiveForm;
 use yii\widgets\Pjax;
 
+//Added Loader spinner on ajax + send ajax with Orders object, Unique order number, User address, mobile, gets the Php Json data
+
 //Register my custom css/js Asset Bundle for this View only(detailed instruction in -> assets/CheckOutAssetOnly.php)
 use app\assets\CheckOutAssetOnly; // using my custom asset to use modal.js/mycore.js Only in this View
 CheckOutAssetOnly::register($this); // register my custom asset to use modal.js/mycore.js Only in this View (1st name-> is the name of Class)
@@ -271,15 +273,16 @@ $Controller = Yii::$app->controller->id; // to pass in ajax
   
   //Image to show while ajax load - Load Spinner--------
   $(document).ajaxSend(function(event, request, settings) {
+	  $("html, body").animate({ scrollTop: 0 }, "slow"); // scroll the page up to bottom
       $('body').addClass('thickbox-open'); // adds blur class to body while loading
 	  //$('#loading-indicator').parents().removeClass("thickbox-open");
-      $('#loading-indicator').show(400);
+      $('#loading-indicator').show();
       
   });
 
   $(document).ajaxComplete(function(event, request, settings) {
       $('body').removeClass('thickbox-open');  // removes blur class to body while loading
-      $('#loading-indicator').hide(1200);
+      setTimeout("$('#loading-indicator').hide(1200)", 3000);  // remove spinner loader with some delay
   });
   //END Image to show while ajax load Load Spinner-------
   

@@ -231,16 +231,30 @@ class ProductsController extends Controller
                 $test = "Ajax failed 100%";
             }
 
-		   $searchname = $_POST['searchname']; // gets name from js ajax
-		   $controller= $_POST['controller']; // gets name from js ajax
+		   // Get variables with data from JS ajax request from checkout.php
+		   $searchname =  Yii::$app->request->post('searchname'); //test name
+		   //$controller = $_POST['controller']; // gets controller from js ajax
+		   $controller =  Yii::$app->request->post('controller'); // gets controller from js ajax, Yii version
+		   $userName =    Yii::$app->request->post('userName'); // gets user fields from form
+		   $userCell =    Yii::$app->request->post('userCell'); // gets user fields from form
+		   $userAddr =    Yii::$app->request->post('userAddress'); // gets user fields from form
+		   $orderNumber = Yii::$app->request->post('uniqueOrderNumber'); // get unique Order number, generated in checkout.php in JS generateUUID()
+		   $allOrders =   Yii::$app->request->post('orderObject'); // get all OrdersObject
 		   
 		   
-         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+		  // Specify what dtat to echo with JSON
+         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;  
           return [
              'result_status' => $test, // return ajx status
              'code' => 100,
-		     'name' => $searchname,     // test name 
-			 'controller' => $controller,     // csrf
+		     'name' => $searchname,         // test name 
+			 'controller' => $controller,   // current controller
+			 'userformData' => $userName,   // current name
+			 'userCell' => $userCell,       // cell
+			 'userAddr' => $userAddr,       // address
+			 'orderNumber' => $orderNumber, // unique Order number, generated in checkout.php in JS generateUUID()
+			 'allOrders' => $allOrders, // unique Order number, generated in checkout.php in JS generateUUID(
+			    
           ]; 
 		
 		

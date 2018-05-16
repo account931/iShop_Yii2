@@ -29,10 +29,13 @@ $this->params['breadcrumbs'][] = $this->title;
 /* Ajax load image*/
 #loading-indicator {
   position: absolute;
-  left: 40%;
-  top: 40%;
+  left: 23%;
+  top: 18%;
+  width:40%;
+
 }
 
+/* Class to blur when Ajax is working */
 .thickbox-open  {
   -webkit-filter: blur(2px);
   -moz-filter: blur(2px);
@@ -199,7 +202,7 @@ $Controller = Yii::$app->controller->id; // to pass in ajax
        //var attributes = $(this).data().attributes; // to get the list of attributes that has been passed in attributes property
        //var settings = $(this).data().settings; // to get the settings
        //alert (attributes);
-  
+ 
        var form = $(this);
 	   if (form.find('.has-error').length ) {  //if validation failed
 	   
@@ -232,7 +235,8 @@ $Controller = Yii::$app->controller->id; // to pass in ajax
 					userCell : $('#mobile_id').val(), //passing cell mobile
 					userAddress : $('#address_id').val(), //passing address info input
 					uniqueOrderNumber : generateUUID() , // unique Order number
-					orderObject : JSON.stringify( productsObject ), // pass an Object with all order to php
+					orderObject : JSON.stringify( productsObject ), // pass an Object with all order to php, it saves it DB and JSOn echo it for getting answer in JS below
+					orderTotalSum : substringSum(totalSum), // pass total sum
                 },
 				
 				// if send was successful
@@ -246,17 +250,19 @@ $Controller = Yii::$app->controller->id; // to pass in ajax
 					var formatted_allOrders = '<br>You have ordered:'; //will contain the whole orders answer
 					var priceTotal = 0; // total price of all oreders
 					
-					var objMine = JSON.parse(res.allOrders); // covert JSON part with orders to JS Object
+					var objMine = JSON.parse(res.allOrders); // covert data JSON  echoed by Php ctionGetajaxorderdata, part with orders to JS Object
 					//alert(JSON.stringify(objMine, null, 4));
 					
 					for (var key in objMine) {
 						 priceTotal = priceTotal + objMine[key]['price'] * objMine[key]['quantity'] ; // total price of all oreders
 						 formatted_allOrders = formatted_allOrders + "<br>" + key + ": " + objMine[key]['price'] + " * " + objMine[key]['quantity'] + " items = " + substringSum (objMine[key]['price'] * objMine[key]['quantity']) + " UAH";
 					 }
-                     formatted_allOrders = formatted_allOrders + "<br>Total: " + priceTotal + " UAH";	//adding total price of all oreders	 
+                     formatted_allOrders = formatted_allOrders /* + "<br>Total: " + priceTotal + " UAH"*/;	//adding total price of all oreders	 
 					
 				    textMine = res.result_status + "<br> Current Controller: " + res.controller + "<br>" +res.userformData + "<br>" +res.userCell + "<br>" +
-  					    res.userAddr + "<br>Order ID: " + res.orderNumber + "<br>OrderList:<br> " + formatted_allOrders; // formate the answer to html in view
+  					    res.userAddr + "<br>Order ID: " + res.orderNumber + "<br>OrderList:<br> " + formatted_allOrders +
+						"<br>Total = " + res.totalSum + "UAH<br>" + res.sql_status_buyers + "<br>" +res.sql_status_orders; // formate the answer to html in view
+						
 						
 					//html with animation
 					$('.checkout-index').stop().fadeOut("slow",function(){  $('.checkout-index').html(textMine) }).fadeIn(2000);
@@ -274,15 +280,15 @@ $Controller = Yii::$app->controller->id; // to pass in ajax
   //Image to show while ajax load - Load Spinner--------
   $(document).ajaxSend(function(event, request, settings) {
 	  $("html, body").animate({ scrollTop: 0 }, "slow"); // scroll the page up to bottom
-      $('body').addClass('thickbox-open'); // adds blur class to body while loading
+      //$('body').addClass('thickbox-open'); // adds blur class to body while loading
 	  //$('#loading-indicator').parents().removeClass("thickbox-open");
       $('#loading-indicator').show();
       
   });
 
   $(document).ajaxComplete(function(event, request, settings) {
-      $('body').removeClass('thickbox-open');  // removes blur class to body while loading
-      setTimeout("$('#loading-indicator').hide(1200)", 3000);  // remove spinner loader with some delay
+      //$('body').removeClass('thickbox-open');  // removes blur class to body while loading
+      setTimeout("$('#loading-indicator').hide(1200)", 5000);  // remove spinner loader with some delay
   });
   //END Image to show while ajax load Load Spinner-------
   

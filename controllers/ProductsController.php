@@ -3,8 +3,11 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Products;
+use app\models\Products; // model for All products in DB Products
 use app\models\Products_Search;
+use app\models\Buyers; //  Model for DB, which contains Customer name, cell, address, unique order ID, total sum. The order itself si in ORDERS DB SQL
+use app\models\Orders;// This SQL model to save Order Unique ID, user and the whole order passesd from JS Object by ajax
+
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -15,7 +18,7 @@ use app\models\Produc_Check_out_UserInfoForm; //My model (No SQL DB connection) 
  */
 class ProductsController extends Controller
 {
-	
+	public $sql_status_buyers = "unknown"; // used in save_to_Buyers_DB() // NOT USED
 	
     /**
      * @inheritdoc
@@ -194,7 +197,9 @@ class ProductsController extends Controller
 
 	
 	
-	// Gets Ajax data from User check out order
+	// Gets Ajax data from User check out order(checkout.php) //gets ajax with Orders object, Unique order number, User address, mobile, 
+	//and echo the Php Json data to be dispalyed back in checkout.php with JS
+
 	// **************************************************************************************
     // **************************************************************************************
     //                                                                                     **
@@ -203,22 +208,93 @@ class ProductsController extends Controller
     {
 		
 		
-	/*	if (Yii::$app->request->isAjax) {
-    $data = Yii::$app->request->post();
-   
-	 $search = explode(":", $data['searchby']);
-	 $search = $searchname[0];
-	 
-    \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-    return [
-        'search' => $search,
-        'code' => 100,
-    ];
-  }
-		*/
 		
 		
-	// check if POST request	
+		 //$this->sql_status_buyers = "HZ";
+		// Saves values to Buyers DB, saves Customer name, cell, address, unique order ID, total sum. The order itself is in ORDERS DB SQL ---------------------------------------
+	    function save_to_Buyers_DB() {
+			 try {
+			 
+			     $customerModel = new Buyers();
+			     $customerModel->b_name = Yii::$app->request->post('userName'); // $_POST from ajaxed checkout.php
+			     $customerModel->b_mobile = Yii::$app->request->post('userCell');
+			     $customerModel->b_address = Yii::$app->request->post('userAddress');
+			     $customerModel->b_status = "0";
+			     $customerModel->b_order_unique_id = Yii::$app->request->post('uniqueOrderNumber');
+			     $customerModel->b_total_sum = Yii::$app->request->post('orderTotalSum');
+			     
+				 
+			     if ($customerModel->save(false)) {
+				    $_SESSION['status'] = "SQL Buyers OK";	 // use $_SESSION['status'] as declaring public var causes crash
+			     }
+			    
+				 //throw new \Exception('Error!'); // this line caused catch part, even if all is OK
+			     } catch (\Exception $ex) { 
+			         $_SESSION['status'] = "SQL Buyers Catched initaited";			 
+			      }
+			
+		 }	
+         // END save_to_Buyers_DB() -------------
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 //-------------------------------------
+         function save_to_Orders_DB() {
+			 
+			 try {
+				 
+				 //$array = explode(' ', Yii::$app->request->post('orderObject'));
+				 $arrayDecoded = json_decode(Yii::$app->request->post('orderObject'), true);  // Convert ajax string to php Array, should use second parametr {true}, to use as $var['el'], not (4var->el)
+				 //$one = reset ($arrayDecoded); //1st elementt of array
+				 //$two = reset ($one); //1st elementt of array
+                 
+			     //$ordersModel = new Orders(); //must be inside foreach Loop, otherwise will record the last loop only
+				 $timeStamp = date("Y-m-d H:i:s"); //Yii::$app->formatter->asTimestamp(date('Y-d-m h:i:s'));
+				 
+			     foreach ($arrayDecoded as $k => $v) {
+			 
+			         $ordersModel = new Orders(); //must be inside foreach Loop,  otherwise will record the last loop only
+			         $ordersModel->order_user_name = Yii::$app->request->post('userName'); // $_POST from ajaxed checkout.php
+			         $ordersModel->order_unique_ID = Yii::$app->request->post('uniqueOrderNumber');  //unique Order ID, generated in checkout.php and sent by ajax
+				     $ordersModel->order_date = $timeStamp; // date("Y-m-d H:i:s");  //current date
+				     $ordersModel->order_product =  $k;// Name of current product //$one['price']; //!!!!!!!!!!
+				     $ordersModel->order_pcs = $v['quantity']; // Quantiyu of current product //2;//Yii::$app->request->post('orderObject')[0]['quantity'];
+				     $ordersModel->order_price = $v['price']; //2.2;//Yii::$app->request->post('orderObject')[0]['price'];
+			  
+			     
+				 
+			         if ($ordersModel->save(false)) {
+				         $_SESSION['status_orders'] = "SQL Orders OK";	 // use $_SESSION['status'] as declaring public var causes crash
+			         }
+				 } // foreach
+				 
+				 //throw new \Exception('Error!'); // this line caused catch part, even if all is OK
+			     } catch (\Exception $ex) { 
+			         $_SESSION['status_orders'] = "SQL Orders Catched initaited";			 
+			      }
+		 }			 
+	     // END save_to_Orders_DB() -------------
+		 
+		 
+		 
+		 
+		 
+		 
+
+		 
+		 
+		 
+		 
+		
+		
+	    // check if received Ajax and POST request	from checkout.php
         $dataZ = Yii::$app->request->post();
             if (isset($dataZ)) {
 			
@@ -241,8 +317,13 @@ class ProductsController extends Controller
 		   $orderNumber = Yii::$app->request->post('uniqueOrderNumber'); // get unique Order number, generated in checkout.php in JS generateUUID()
 		   $allOrders =   Yii::$app->request->post('orderObject'); // get all OrdersObject
 		   
+		   //caliing functions to save to Buyres and Orders
+		   save_to_Buyers_DB();
+		   save_to_Orders_DB();
 		   
-		  // Specify what dtat to echo with JSON
+		   
+		   
+		  // Specify what data to echo with JSON, ajax usese this JSOn data to form the answer and html() it, it appears in JS consol.log(res)
          \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;  
           return [
              'result_status' => $test, // return ajx status
@@ -253,19 +334,23 @@ class ProductsController extends Controller
 			 'userCell' => $userCell,       // cell
 			 'userAddr' => $userAddr,       // address
 			 'orderNumber' => $orderNumber, // unique Order number, generated in checkout.php in JS generateUUID()
-			 'allOrders' => $allOrders, // unique Order number, generated in checkout.php in JS generateUUID(
+			 'allOrders' => $allOrders, // unique Order number, generated in checkout.php in JS generateUUID
+			 'totalSum' => Yii::$app->request->post('orderTotalSum'), // unique Order number, generated in checkout.php in JS generateUUID
+			 'sql_status_buyers' => $_SESSION['status'], // status for saving to Buyers DB, defined in save_to_Buyers_DB()
+			 'sql_status_orders' => $_SESSION['status_orders'], // status for saving to Orders DB, defined in save_to_Orders_DB()
 			    
           ]; 
 		
 		
 		
 
-	
-		    /*return $this->render('ajax', [
+	        /*
+		    return $this->render('ajax', [
                //'searchModel' => $searchModel, //is in model
 			   'ress' => $search , //is in model
-        ]);*/
-		
+			   'arrayDecoded' => $arrayDecoded , //is in model
+        ]);
+		*/
 		
     }
 	// **                                                                                  **

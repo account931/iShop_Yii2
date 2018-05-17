@@ -1,5 +1,5 @@
 <?php
-
+// Main Controller, SiteController responsible for sign ui, sign up ONLY
 namespace app\controllers;
 
 use Yii;
@@ -11,6 +11,8 @@ use app\models\Orders;// This SQL model to save Order Unique ID, user and the wh
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+
+//use yii\db\ActiveQuery;
 
 use app\models\Produc_Check_out_UserInfoForm; //My model (No SQL DB connection) for User Information input in view/products/checkout.php
 /**
@@ -356,6 +358,58 @@ class ProductsController extends Controller
 	// **                                                                                  **
     // **************************************************************************************
     // **************************************************************************************  
+	
+	
+	
+	
+	
+	
+	// Display all placed Orders with status 0, intended for Admin Only, uses InnerJoin
+	// **************************************************************************************
+    // **************************************************************************************
+    //                                                                                     **
+	
+	public function actionPlaced()
+	{
+		
+		//InnerJoin
+        $query = new \yii\db\Query;  //must be {$query = new \yii\db\Query;} not{$query = new Query;}, adding {use yii\db\Query} won't help
+        $query  ->select(['order_user_name', 'b_mobile', 'order_unique_ID', 'order_product', 'order_pcs'])  //columns list
+                ->from('orders')  //table1
+                 ->join( 'INNER JOIN', 
+                     'buyers', //table2
+                     'buyers.b_order_unique_id=orders.order_unique_ID' //table2.column = table1.column
+                  ); 
+        $command = $query->createCommand();
+        $query = $command->queryAll(); 
+		// END InnerJoin
+		
+		//$customers = Buyers::find()->joinWith('Orders')->all();
+		 
+		return $this->render('placed', [
+            'query' => $query, //innerJoint result
+			//'customers' => $customers, //innerJoint result
+			  
+        ]);
+		
+	}
+	
+	
+	// **                                                                                  **
+    // **************************************************************************************
+    // **************************************************************************************  
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

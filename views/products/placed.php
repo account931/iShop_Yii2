@@ -29,10 +29,24 @@ $this->params['breadcrumbs'][] = $this->title;
       
 	  
 	//---
+	$counter = 0;
+	//echo "<br><hr>Customer: " . $query[$counter]['b_name'] . "<br>Order ID: " . $query[$counter]['b_order_unique_id'] . "<br>" ;
 	foreach($query as $key => $value){
+		
+			++$counter;
+		    echo "<script>alert($counter);</script>";
+			
+		    echo "<br><hr>Customer: " . $query[$counter]['b_name'] . "<br>Order ID: " . $query[$counter]['b_order_unique_id'] . "<br>" ;
+		
+		
+		
         if(is_array($value)){
-            foreach($value as $key => $value){
+			
+			
+            foreach( array_slice($value, 5)  as $key => $value){  //array_slice($value, 3)   - skipp first 4 iteration
+			
                 echo $key." :".$value."<br>";
+				
             }
         }
         echo "<br>";

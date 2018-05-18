@@ -58,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		  echo "<br>Mobile: " .   $buyersResults[$i]['b_mobile'];
           echo "<br>Date: " .     $buyersResults[$i]['b_time']; 
           echo "<br>Total: " .    $buyersResults[$i]['b_total_sum'] . " UAH";
-          echo "<br>Ordered : " . count($countBuyOrders_quantity) . " items";	// quantity of products in order	  
+          echo "<br>Ordered : " . $countBuyOrders_quantity[$i] . " items";	// quantity of products in order	  
 		  echo "<hr>";
 		  
          

@@ -13,7 +13,7 @@ Client side JS Object is cleared and set to empty.
 //-----------------
 
 Ajax shop part, how works
-It runs in ProductsController.
+It all runs in ProductsController,it is the core controller, SiteController for sign in/sign up Only, OrdersController/ByuersController is for quick CRUD only
 1.actionCheckout.php checks fields filled by user (with Models/Produc_Check_out_UserInfoForm.php) and sends ajax request to actionGetajaxorderdata(). 
 #As <form> is created with Yii2, to ensure that Submit Button won"t reload the page, we add {return false;} in construction {$("#myForm").on("beforeSubmit", function (event, messages) }, (it allows to run Model Validation).
 #Long term error in ajax happened as it used incorrect URL, which returned 404 "Not found " or 403 "No access". (Had to define URL to var, outside the Ajax part).

@@ -10,7 +10,9 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
-AppAsset::register($this);
+use yii\bootstrap\Dropdown;// class for dropdown
+
+AppAsset::register($this); // register main Asset
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -44,9 +46,17 @@ AppAsset::register($this);
   color: black;
 }
 
+/* Class always highlighted 1st menu item */
 .activeZ {
   background-color: #4CAF50;
   color: white;
+}
+
+/* Class for highlighted current menu */
+.activeMenuItem {
+  background-color: ;
+  color: white;
+  border: 1px solid white;
 }
 
 .topnav .icon {
@@ -75,9 +85,11 @@ AppAsset::register($this);
   }
 }
 
-
+.current-page {background-color:green;}
 
   </style><!-- End Responsive-->
+  
+
 </head>
 <body>
 <?php $this->beginBody() ?>  <!-- Left from original-->
@@ -95,21 +107,49 @@ AppAsset::register($this);
 	<nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
   
-        <!--------------------- Responsive Header menu----------------------->
+        <!--------------------- Responsive Header menu, we need each <a> with class="check", to hightlight active menu in js/main_layou.js----------------------->
 	    <div class="topnav" id="myTopnav">
 			<?= Html::a( "Home", ['/site/index', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'activeZ', 'id'=>'home', 'title' => 'Go home',] ) ?>
             <!--<a href="#home" class="active" id="home">Home</a>-->
-			<?= Html::a( "PControlrol", ['/products/index', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'', 'title' => 'Go home',] ) ?>
-			<?= Html::a( "About", ['/site/about', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'', 'title' => 'About us',] ) ?>
-			<?= Html::a( "Contact", ['/site/contact', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'', 'title' => 'Contact us',] ) ?>
-		    <?= Html::a( "iShop", ['/products/shop', 'period' => "",   ] /* $url = null*/, $options = ['title' => 'Shop',] ) ?>
-			<?= Html::a( "CheckOut", ['/products/checkout', 'period' => "",   ] /* $url = null*/, $options = ['title' => 'Shop',] ) ?>
-			<?= Html::a( "Placed", ['/products/checkout', 'period' => "",   ] /* $url = null*/, $options = ['title' => 'Shop',] ) ?>
-			<?= Html::a( "Admin", ['/products/checkout', 'period' => "",   ] /* $url = null*/, $options = ['title' => 'Shop',] ) ?>
+			<?= Html::a( "PControl", ['/products/index', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'check', 'title' => 'Access to all DB',   ] ) ?>
+			<? //Html::a( "About", ['/site/about', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'check', 'title' => 'About us',] ) ?>
+			<? //Html::a( "Contact", ['/site/contact', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'check', 'title' => 'Contact us',] ) ?>
+		    <?= Html::a( "Shop", ['/products/shop', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'check', 'title' => 'Shop',] ) ?>
+			<?= Html::a( "CheckOut", ['/products/checkout', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'check', 'title' => 'Shop',] ) ?>
+			<?= Html::a( "Placed", ['/products/placed', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'check', 'title' => 'Non proccessed Server Orders',] ) ?>
+			<?= Html::a( "History", ['/', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'check', 'title' => 'Server Orders History',] ) ?>
+			
+			<?= Html::a( "Local", ['/products/history', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'check', 'title' => 'Local storage Orders History',] ) ?>
+			<?= Html::a( "Buy.DB", ['/buyers/index', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'check', 'title' => 'Buyers DB',] ) ?>
+			<?= Html::a( "Ord.DB", ['/orders/index', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'check', 'title' => 'Orders DB',] ) ?>
+			
+			
+			
+			
+			<!-----DropDown Yii2 Widget, SO FAR DEACTIVATED------>
+           <!--<div class="dropdown">
+               <a href="#" data-toggle="dropdown" class="dropdown-toggle">Label <b class="caret"></b></a>
+              <?php
+			  
+              echo Dropdown::widget([
+                       'items' => [
+                      ['label' => 'Buyres CRUD', 'url' => '/buyers/index'], //does not route correctly
+                      Html::a( "Orders DB CRUD", ['/orders/index', 'period' => "", ] , $options = ['title' => 'Orders DB', 'style'=>'color:black'] ),
+                      ],
+                   ]);
+			
+                ?>
+            </div>-->
+			<!-----END DropDown Yii2 Widget------>
+			 
+			
+			
+			
+			
 			
 			<?php 
 			if (Yii::$app->user->isGuest) {
-		        echo Html::a( "Login", ['/site/login', 'period' => "",   ] /* $url = null*/, $options = ['title' => 'Login',] );
+		        echo Html::a( "Login", ['/site/login', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'check', 'title' => 'Login',] );
             } else {  //display Log out
                 //echo Html::a( 'Logout (' . Yii::$app->user->identity->username . ')' , ['/site/logout', 'post', 'period' => "",   ] /* $url = null*/, $options = ['title' => 'Login',] );
                 echo '<a>'
@@ -117,7 +157,7 @@ AppAsset::register($this);
                     . Html::submitButton(
 					
                         'Logout (' . Yii::$app->user->identity->username . ')',
-                        ['class' => ' btn-link logout']   //['class' => 'btn btn-link logout']
+                        ['class' => ' btn-link logout check']   //['class' => 'btn btn-link logout']
                     )
                     . Html::endForm()
                     . '</a>';
@@ -198,7 +238,16 @@ AppAsset::register($this);
     </div>
     </footer>
 	<!-- END Left from original-->
+	
+	
+	<!---------PAGE LOADER START, visible while the page is loading, uses js/main_layout.js--------------->
+	<div id="overlay" style="position:absolute; top:20%; left:37% ";>
+     	<?= Html::img(Yii::$app->getUrlManager()->getBaseUrl().'/images/load-spinner.gif' , $options =["id"=>"","marginleft"=>"",  "class"=>"rotateX","width"=>"71%", "alt"=>"click", "title"=>"Loader"] ); ?>
+     </div>
+    <!---------END PAGE LOADER --------------->
+	
 
+	
 
 <?php $this->endBody() ?> <!-- Left from original-->
 </body>

@@ -30,6 +30,7 @@ class AppAsset extends AssetBundle
     public $js = [
 	    //'js/modalBox.js', //ishop -> moved to asserts/ishopAssertOnly.php
 		//'js/myCore.js', //ishop   -> moved to asserts/ishopAssertOnly.php
+		'js/main_layout.js', //js for views/layout/main.php
 	
     ];
     public $depends = [

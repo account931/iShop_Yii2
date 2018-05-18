@@ -372,9 +372,37 @@ class ProductsController extends Controller
 	public function actionPlaced()
 	{
 		
-		//InnerJoin
+		
+		
+		
+		// finds all Buyers-----------------
+		$buyersResults = Buyers::find() 
+		                ->orderBy ('b_id DESC')
+		                 ->where(['b_status' => '0' ]) //finds with 0 status
+		                 ->all();
+								
+		$countBuyOrders_quantity = array(); // empty array that will contain quantity of every order, ie [2, 4, 6] = means 3 orders, 1st contain 2 products, 2nd - 4 products
+	    
+		foreach($buyersResults as $key ){
+		    $results = Orders::find() 
+		               ->orderBy ('order_id DESC')  
+				       ->where(['order_unique_ID' => $key['b_order_unique_id'] ])  
+				       ->all(); //finds all orders from ORDERS SQL where buyer.orderID matches Ordres.orderID
+				
+			$count = count ( $results ); // count them, ie amount of orders in Orders SQL for a given unique orderID
+			array_push($countBuyOrders_quantity, $count); // add to array a quantity of products for every Order, ie [2, 4, 6]
+		}
+		// END finds all Buyers------------
+		
+		
+		
+		
+		
+		
+		
+		//Inner Join--------
         $query = new \yii\db\Query;  //must be {$query = new \yii\db\Query;} not{$query = new Query;}, adding {use yii\db\Query} won't help
-        $query  ->select(['order_user_name', 'b_mobile', 'order_unique_ID', 'order_product', 'order_pcs'])  //columns list
+        $query  ->select(['b_name', 'b_order_unique_id', 'order_user_name',  'order_unique_ID', 'order_product', 'order_pcs', 'order_price'])  //columns list
                 ->from('orders')  //table1
                  ->join( 'INNER JOIN', 
                      'buyers', //table2
@@ -382,14 +410,18 @@ class ProductsController extends Controller
                   ); 
         $command = $query->createCommand();
         $query = $command->queryAll(); 
-		// END InnerJoin
+		// END Inner Join------------
 		
-		//$customers = Buyers::find()->joinWith('Orders')->all();
+		
+		
+		
 		 
 		return $this->render('placed', [
-            'query' => $query, //innerJoint result
-			//'customers' => $customers, //innerJoint result
-			  
+            'query' => $query, //Inner Join result (based on Buyres/Orders Sql)
+			'buyersResults' => $buyersResults, // all buyers
+			'countBuyOrders_quantity' => $countBuyOrders_quantity, // array that contains quantity of every order, ie [2, 4, 6] = means 3 orders, 1st contain 2 products, 2nd - 4 products
+			
+			
         ]);
 		
 	}

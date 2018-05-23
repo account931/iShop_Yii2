@@ -1,9 +1,13 @@
 <?php
-
+//Shop start page, displays all products from DB Products
 use yii\helpers\Html;
 use yii\grid\GridView;
 
-use app\models\Products;
+use app\models\Products; //my model for iShop products
+
+//Register my custom css/js Asset Bundle for this View only(detailed instruction in -> assets/IshopAssetOnly.php)
+use app\assets\IshopAssetOnly; // using my custom asset to use modal.js/mycore.js Only in this View
+IshopAssetOnly::register($this); // register my custom asset to use modal.js/mycore.js Only in this View (1st name-> is the name of Class)
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\Products_Search */
@@ -31,8 +35,9 @@ $this->params['breadcrumbs'][] = $this->title;
   <a href="#">Services</a>
   <a href="#">Clients</a>
   <a href="#">Contact</a>
-  </br><p id="fullCartList">V</p>
-  </br><p> Total: <span id="totalSumCartFull"> 0 UAH</span></p>
+  <br><br><p id="fullCartList">V</p>
+  <br><p> Total: <span id="totalSumCartFull"> 0 UAH</span></p>
+  <br><br><br><?= Html::a('Check-out the order', ['checkout'],  $options = ['title' => 'Shop', "width"=>"15%", 'class' => 'btn zzz']) ?> 
 </div>
 
 </br></br></br>
@@ -58,20 +63,23 @@ function closeNav() {
 
 <!--Start Mine Small Modal, when u click on product from list, Box uses src="js/modalBox.js-->
 <div>
-<h2>iShop with Animated Modal incl Header and Footer</h2>
+<h2>Shop with Animated Modal incl Header and Footer</h2>
 
 <!-- Trigger/Open CART (was The Modal) -->
 <button class="myCart" >Open Cart</button>
 <!--<button class="myBtn" >Open Cart</button>-->
 
-<!-- The Modal -->
+
+
+
+<!-------------------------------------- The Modal, displays a single product, when u click it on the list ---------------------->
 <div id="myModal" class="modal">
 
   <!-- Modal content -->
   <div class="modal-content">
     <div class="modal-header">
       <span class="close">&times;</span>
-      <h2>Modal Header</h2>
+      <h2>Product Header</h2>
     </div>
 	
     <div class="modal-body">
@@ -113,7 +121,7 @@ function closeNav() {
 	 <!--</div>--> <!--<div class="container ff" --for bootstrap--> 
     </div>
     <div class="modal-footer">
-      <h3>Modal Footer</h3>
+      <h3>Product Footer</h3>
     </div>
   </div>
 
@@ -122,7 +130,7 @@ function closeNav() {
 <script>
 
 </script>
-<!-- End Mine Modal Box-->
+<!-------------------------------------- END The Modal, displays a single product, when u click it on the list ---------------------->
 
 
 
@@ -160,6 +168,7 @@ function closeNav() {
 	<div class="list-group">
 	
 	<?php
+	    // Logic is in models/products.php
 		Products::displayProducts();
 	?>
      </div>

@@ -10,6 +10,26 @@ use yii\grid\GridView;
 $this->title = 'Products';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+
+
+
+
+<p>
+  <?= Html::a('Products Sql DB', ['/products/index'], ['class' => 'btn btn-info']) ?>
+  <?= Html::a('Buyers Sql DB', ['buyers/index'], ['class' => 'btn btn-success']) ?>
+  <?= Html::a('Orders Sql DB', ['/orders/index'], ['class' => 'btn btn-danger']) ?>
+</p> 
+
+
+
+
+
+
+
+
+
+
 <div class="products-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -22,6 +42,18 @@ $this->params['breadcrumbs'][] = $this->title;
 	<?= Html::a( "Shop itself", ['/products/shop', 'period' => "",   ] /* $url = null*/, $options = ['title' => 'Shop',] ) ?>
 
     <br><br>
+	<center>
+	
+	<img src="http://cloudhost.com.ng/blog/wp-content/uploads/2016/10/create-mysql-database.jpg"/>
+	
+	<!----Dropdown Bootstrap, part1---->
+	<div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown CRUD
+        <span class="caret"></span></button>
+		<div class="dropdown-menu">
+	<!----END Dropdown Bootstrap, part1---->
+	
+	
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -37,4 +69,11 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+	
+	<!----Dropdown Bootstrap, part2---->
+	</div></div>
+	<!----Dropdown Bootstrap, part2---->
+	
+	</center>
+	
 </div>

@@ -240,9 +240,9 @@ AppAsset::register($this); // register main Asset
 	<!-- END Left from original-->
 	
 	
-	<!---------PAGE LOADER START, visible while the page is loading, uses js/main_layout.js--------------->
-	<div id="overlay" style="position:absolute; top:20%; left:37% ";>
-     	<?= Html::img(Yii::$app->getUrlManager()->getBaseUrl().'/images/load-spinner.gif' , $options =["id"=>"","marginleft"=>"",  "class"=>"rotateX","width"=>"71%", "alt"=>"click", "title"=>"Loader"] ); ?>
+	<!---------PAGE LOADER START, visible while the page is loading, uses js/main_layout.js, css is in yii2_mine.css--------------->
+	<div id="overlay">
+     	<?= Html::img(Yii::$app->getUrlManager()->getBaseUrl().'/images/load-spinner.gif' , $options =["id"=>"","marginleft"=>"",  "class"=>"rotateX","width"=>"", "alt"=>"click", "title"=>"Loader"] ); ?>
      </div>
     <!---------END PAGE LOADER --------------->
 	

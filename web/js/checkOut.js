@@ -87,10 +87,13 @@ $(document).ready(function(){
 	function buildOrderList() 
 	{
 	//alert(JSON.stringify(productsObject, null, 4)); //to alert OBJECT
+	    window.totalSum = 0; //final total sum
         var finalText = "<div class='container ' style='word-wrap: break-word;'>";  // word-wrap: break-word to prevent text overlapping
 		for (var key in productsObject) {
 			
 			var addID = key; // alert (addID);
+			totalSum = totalSum + productsObject[key]['quantity'] * productsObject[key]['price'];
+			
 			finalText = finalText + 
 			            "<div class='row'>" +
 						"<div class='col-sm-4 col-xs-2 '>" + key + "</div> " +
@@ -102,7 +105,7 @@ $(document).ready(function(){
 						"</div>" +
 						"</div><hr class='bordX '>";
 		}
-		finalText = finalText + "</div>";
+		finalText = finalText + "<br> Total: " + substringSum(totalSum) + "</div>";
 		
 		$(".checkList").html(finalText);	
 	}

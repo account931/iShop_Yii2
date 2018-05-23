@@ -327,7 +327,7 @@ $(document).ready(function(){
 	function openCalcSidePagewithCart() 
 	{
 	    //alert(JSON.stringify(productsObject, null, 4)); //to alert OBJECT
-        var finalText = "<div class='container'>";
+        var finalText = "<div class='container' style='word-wrap: break-word;'>";  // word-wrap: break-word to prevent text overlapping
 		for (var key in productsObject) {
 			
 			var addID = key; // alert (addID);
@@ -343,6 +343,7 @@ $(document).ready(function(){
 						"</div></br>";
 		}
 		finalText = finalText + "</div>";
+		
 		$("#fullCartList").html(finalText);
 	}
 	

@@ -22,3 +22,26 @@
 .underline {
  text-decoration: underline;
 }
+
+
+
+/* Preloader, loctaed in views/llayout/main */
+#overlay {
+	position:absolute;
+	top:18%;
+	left:40%;
+	width:97%;
+}
+
+@media screen and (max-width: 460px) {   
+  #overlay {
+	position:absolute;
+	top:20%;
+	left:15%;
+	width:720%;
+  }
+}
+
+
+
+/* Preloader, loctaed in views/llayout/main */

@@ -29,3 +29,13 @@ It all runs in ProductsController,it is the core controller, SiteController for 
 
 3.Ajax gets the aswer from actionGetajaxorderdata(), makes { log.console (res)}, form the aswer and html() it to view.
 #To use Loader Spinner while the Ajax is running, we put an <img style="display:none; position:absolute"> + JQ show/hide Loader {$(document).ajaxSend(function(event, request, settings)} = {$(document).ajaxComplete(function(event, request, settings)}
+
+
+//----------------------------------------
+
+Placed -  the section for orders, which were placed, but not processed by admin (i.e have status=0). Based on Inner Join.
+How it works.
+1.ControllerProduct: Select all buyers from SQL Buyers with status=0. In table Buyers we have fields with name, contacts and uniqueID only and no ordered products. It returnes an array, which length will be used for 1st for () loop and lenght to Selected and count the quantity of every order [3, 2]
+2.Controller: In for () loop based onSelect Buyers lenght, finds all orders for a specified ID, count them and add value to a new array.
+3.Controller: Select Inner Join from Buyers and Orders join on unique Id.
+4.View/Products/Placed.php: we use double for()  loop, 1st for() iterates over Buyer lenght(all buyers from SQL Buyers where status=0) and display a buyer info. Second inner for() loop itetates over quantity of odrers [3, 2, 5] lengh and display relevant Inner Join SQL results, by changing iterator start/end values according formula.

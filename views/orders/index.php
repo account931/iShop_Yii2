@@ -14,11 +14,12 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="orders-index">
 
     <p>
-       <?= Html::a('Products Sql DB', ['/products/index'], ['class' => 'btn btn-info']) ?>
-       <?= Html::a('Buyers Sql DB', ['buyers/index'], ['class' => 'btn btn-success']) ?>
-       <?= Html::a('Orders Sql DB', ['/orders/index'], ['class' => 'btn btn-danger']) ?>
+       <?= Html::a('Products Sql DB', ['/products/index', 'period' => "",], ['class' => 'btn btn-info']) ?>
+       <?= Html::a('Buyers Sql DB', ['buyers/index', 'period' => "",], ['class' => 'btn btn-success']) ?>
+       <?= Html::a('Orders Sql DB', ['/orders/index', 'period' => "",], ['class' => 'btn btn-danger']) ?>
     </p> 
-
+	
+	
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>

@@ -72,11 +72,11 @@ $this->params['breadcrumbs'][] = $this->title;
 	<br><br>
 	
 	
-	    <!---------------------User's order list from JS object, filled with checkout.php------------->
+	    <!---------------------User's order list from JS object, filled with web/js/checkout.js------------->
 	    <div class="checkList">
 		</div><!--END <div class="checkList">-->
 		<br><br>
-		<!---------------------User's order list from JS object, filled with checkout.php------------->
+		<!---------------------User's order list from JS object, filled with web/js/checkout.js------------->
 		
 		
 		
@@ -161,6 +161,8 @@ $this->params['breadcrumbs'][] = $this->title;
 		
 		
 </div> <!-- <div class="checkout-index">-->
+
+<!----AJAX LOADER SPINNER--->
 <img src="images/load-spinner.gif" id="loading-indicator" style="display:none" /> <!--- Animation while ajax Load Spinner-->
 
 

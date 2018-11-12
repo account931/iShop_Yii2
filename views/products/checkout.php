@@ -14,8 +14,8 @@ CheckOutAssetOnly::register($this); // register my custom asset to use modal.js/
 
 //REGISTER this as it contains calculating the whole sum in header
 //Register my custom css/js Asset Bundle for this View only(detailed instruction in -> assets/IshopAssetOnly.php)
-use app\assets\IshopAssetOnly; // using my custom asset to use modal.js/mycore.js Only in this View
-IshopAssetOnly::register($this); // register my custom asset to use modal.js/mycore.js Only in this View (1st name-> is the name of Class)
+//use app\assets\IshopAssetOnly; // using my custom asset to use modal.js/mycore.js Only in this View
+//IshopAssetOnly::register($this); // register my custom asset to use modal.js/mycore.js Only in this View (1st name-> is the name of Class)
 
 
 //Uses Spinner Loader on while ajax {1.<img src="images/load-spinner.gif" id="loading-indicator". 2.#loading-indicator css + thickbox-open  {-webkit-filter: blur(2px); 3.$(document).ajaxSend(function(event, request, settings) { $('body').addClass('thickbox-open'); $('#loading-indicator').show(400);}

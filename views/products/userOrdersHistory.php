@@ -7,10 +7,10 @@ use yii\widgets\Pjax;
 
 //Added Loader spinner on ajax + send ajax with Orders object, Unique order number, User address, mobile, gets the Php Json data
 
-//REGISTER this as it contains calculating the whole sum in header
+
 //Register my custom css/js Asset Bundle for this View only(detailed instruction in -> assets/IshopAssetOnly.php)
-use app\assets\IshopAssetOnly; // using my custom asset to use modal.js/mycore.js Only in this View
-IshopAssetOnly::register($this); // register my custom asset to use modal.js/mycore.js Only in this View (1st name-> is the name of Class)
+use app\assets\HistoryAssetOnly; // using my custom asset to use modal.js/mycore.js Only in this View
+HistoryAssetOnly::register($this); // register my custom asset to use modal.js/mycore.js Only in this View (1st name-> is the name of Class)
 
 
 

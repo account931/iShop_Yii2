@@ -440,7 +440,30 @@ class ProductsController extends Controller
 	
 	
 	
+	// Display all placed Orders for a specific Logged User, link to this is visible in layout/main.php for Logged only
+	// **************************************************************************************
+    // **************************************************************************************
+    //                                                                                     **
 	
+	public function actionUserordershistory()
+	{
+		
+		
+		 
+		return $this->render('userOrdersHistory', [/*
+            'query' => $query, //Inner Join result (based on Buyres/Orders Sql)
+			'buyersResults' => $buyersResults, // all buyers
+			'countBuyOrders_quantity' => $countBuyOrders_quantity, // array that contains quantity of every order, ie [2, 4, 6] = means 3 orders, 1st contain 2 products, 2nd - 4 products
+			*/
+			
+        ]);
+		
+	}
+	
+	
+	// **                                                                                  **
+    // **************************************************************************************
+    // **************************************************************************************  
 	
 	
 	

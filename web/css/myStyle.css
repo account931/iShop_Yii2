@@ -12,6 +12,12 @@
 
  .zzz{border:1px solid white; padding:10px; width:30%;margin:0 auto;}
  
+ /* ---------------------------------------- Mobile */
+@media screen and (max-width: 480px) { 
+    .zzz{ width:80%;}
+}
+ /* ----------------------------------- END  Mobile */
+ 
  
  
  /* Small Confirm modal box, when u click on "Add to Cart button" */

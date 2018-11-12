@@ -30,6 +30,7 @@ class CheckOutAssetOnly extends AssetBundle
 		
     ];
     public $js = [
+	    'js/refreshCartIcon.js', //refreshCartIcon(), must be before 'js/myCore.js'
 	    'js/checkOut.js', //check out JS
 		
 	

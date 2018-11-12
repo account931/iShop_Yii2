@@ -21,7 +21,7 @@ use yii\web\AssetBundle;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class IshopAssetOnly extends AssetBundle
+class HistoryAssetOnly extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
@@ -31,9 +31,9 @@ class IshopAssetOnly extends AssetBundle
 		
     ];
     public $js = [
-	    'js/modalBox.js', //ishop
+	    //'js/modalBox.js', //ishop
 		'js/refreshCartIcon.js', //refreshCartIcon(), must be before 'js/myCore.js'
-		'js/myCore.js', //ishop
+		'js/loadLocalStorage.js', //load lS
 		
 	
     ];

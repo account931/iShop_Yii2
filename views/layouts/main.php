@@ -23,6 +23,8 @@ AppAsset::register($this); // register main Asset
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
+	<!--Favicon-->
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
     <?php $this->head() ?>
 	
 	<style> <!-- Start Responsive-->
@@ -106,6 +108,10 @@ AppAsset::register($this); // register main Asset
 	<!----------Start Injected Menu---------------->
 	<nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
+		
+		
+		
+		
   
         <!--------------------- Responsive Header menu, we need each <a> with class="check", to hightlight active menu in js/main_layou.js----------------------->
 	    <div class="topnav" id="myTopnav">
@@ -114,13 +120,21 @@ AppAsset::register($this); // register main Asset
 			<?= Html::a( "PControl", ['/products/index', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'check', 'title' => 'Access to all DB',   ] ) ?>
 			<? //Html::a( "About", ['/site/about', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'check', 'title' => 'About us',] ) ?>
 			<? //Html::a( "Contact", ['/site/contact', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'check', 'title' => 'Contact us',] ) ?>
-		    <?= Html::a( "Shop", ['/products/shop', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'check', 'title' => 'Shop',] ) ?>
+		    <?= Html::a( "Shop", ['/products/shop'] /* $url = null*/, $options = ['class'=>'check', 'title' => 'Shop',] ) ?>
+			<?= Html::a( "Cart", ['/products/shop', 'period' => "open-cart",   ] /* $url = null*/, $options = ['class'=>'check', 'title' => 'Shop with openrd cart',] ) ?>
 			<?= Html::a( "CheckOut", ['/products/checkout', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'check', 'title' => 'Shop',] ) ?>
-			<?= Html::a( "Placed", ['/products/placed', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'check', 'title' => 'Non proccessed Server Orders',] ) ?>
-			<?= Html::a( "History", ['/', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'check', 'title' => 'Server Orders History',] ) ?>
+            <?= Html::a( "Placed", ['/products/placed', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'check', 'title' => 'Non proccessed all Server Orders',] ) ?>
+			
+			<?php 
+			//Makes this link visible for Logged users only - users purchases history
+			if (!Yii::$app->user->isGuest) {
+			    echo Html::a( "History", ['/products/userordershistory', 'period' => "",  ] /* $url = null*/,  $options = ['class'=>'check', 'title' => 'Server Specific User"s Orders History', ] );
+			}
+			?>
+		
 			
 			<?= Html::a( "Local", ['/products/history', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'check', 'title' => 'Local storage Orders History',] ) ?>
-			<?= Html::a( "Buy.DB", ['/buyers/index', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'check', 'title' => 'Buyers DB',] ) ?>
+			<?//= Html::a( "Buy.DB", ['/buyers/index', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'check', 'title' => 'Buyers DB',] ) ?>
 			<?= Html::a( "Ord.DB", ['/orders/index', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'check', 'title' => 'Orders DB',] ) ?>
 			
 			
@@ -146,8 +160,8 @@ AppAsset::register($this); // register main Asset
 			
 			
 			
-			
 			<?php 
+			//Log in/ Log Out
 			if (Yii::$app->user->isGuest) {
 		        echo Html::a( "Login", ['/site/login', 'period' => "",   ] /* $url = null*/, $options = ['class'=>'check', 'title' => 'Login',] );
             } else {  //display Log out
@@ -155,10 +169,9 @@ AppAsset::register($this); // register main Asset
                 echo '<a>'
                     . Html::beginForm(['/site/logout'], 'post')
                     . Html::submitButton(
-					
-                        'Logout (' . Yii::$app->user->identity->username . ')',
-                        ['class' => ' btn-link logout check']   //['class' => 'btn btn-link logout']
-                    )
+                                        'Logout (' . Yii::$app->user->identity->username . ')',
+                                        ['class' => 'btn btn-link logout logout-mine', ]   //['class' => 'btn btn-link logout']
+                                        )
                     . Html::endForm()
                     . '</a>';
 			}

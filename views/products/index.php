@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Create Products', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 	
-	<?= Html::a( "Shop itself", ['/products/shop', 'period' => "",   ] /* $url = null*/, $options = ['title' => 'Shop',] ) ?>
+	<?= Html::a( "Go Shopping now ", ['/products/shop', /*'period' => "",*/   ] /* $url = null*/, $options = ['title' => 'Shop',] ) ?>
 
     <br><br>
 	<center>

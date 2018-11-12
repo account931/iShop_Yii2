@@ -16,10 +16,24 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 	<h3><?= Html::encode("Display all submitted placed Orders with status 0, intended for Admin Only") ?></h3>
 	
-	<?php
-	var_dump($query);
 	
-	echo "<br>->" . $query[0]['b_mobile'] . "<br>";
+	
+	<!-- Bootsrap dropdown----->
+	<div class="dropdown">
+       <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">var_dump(Inner Join) 
+       <span class="caret"></span></button>
+       <div class="dropdown-menu">
+  
+	       <?php
+	       var_dump($query);
+	       ?>
+	</div></div><br>
+	<!-- END Bootsrap dropdown----->
+	
+	
+	
+	<?php
+	//echo "<br>->" . $query[0]['b_mobile'] . "<br>";
 	
 	/* Works but can be sorted
 	array_walk_recursive($query, function ($item, $key) {

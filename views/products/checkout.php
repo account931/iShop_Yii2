@@ -12,6 +12,12 @@ use app\assets\CheckOutAssetOnly; // using my custom asset to use modal.js/mycor
 CheckOutAssetOnly::register($this); // register my custom asset to use modal.js/mycore.js Only in this View (1st name-> is the name of Class)
 
 
+//REGISTER this as it contains calculating the whole sum in header
+//Register my custom css/js Asset Bundle for this View only(detailed instruction in -> assets/IshopAssetOnly.php)
+use app\assets\IshopAssetOnly; // using my custom asset to use modal.js/mycore.js Only in this View
+IshopAssetOnly::register($this); // register my custom asset to use modal.js/mycore.js Only in this View (1st name-> is the name of Class)
+
+
 //Uses Spinner Loader on while ajax {1.<img src="images/load-spinner.gif" id="loading-indicator". 2.#loading-indicator css + thickbox-open  {-webkit-filter: blur(2px); 3.$(document).ajaxSend(function(event, request, settings) { $('body').addClass('thickbox-open'); $('#loading-indicator').show(400);}
 
 /* @var $this yii\web\View */
@@ -92,15 +98,25 @@ $this->params['breadcrumbs'][] = $this->title;
 			
 			
 		    <?php
-            // Start if  Person is  LOGGED-------
-            // **************************************************************************************
-            // **************************************************************************************
-            //                                                                                     **
+           
 			
 			//$searchModel - is a My model derived in controller from models/ProductUserInfoForm (No SQL DB connection) for User Information input in view/products/checkout.php
 			 Pjax::begin(); 
 			 
-			 if (Yii::$app->user->isGuest){ $d = "Guest";} else {$d = Yii::$app->user->identity->username;} // Check if Guest or not and put the ID to form
+			 
+			 
+			 // Check if Guest or not and put the ID, name, mail to form
+			 if (Yii::$app->user->isGuest){ 
+			     $d = "Guest";
+				 $mailX = "enter mail";
+			} else {
+				$d = Yii::$app->user->identity->username;
+				$mailX = Yii::$app->user->identity->email;
+			} 
+			// END Check if Guest or not and put the ID, name, mail to form 
+			 
+			 
+			 
 			 
 			 
 			 // Form Start--------------------------------------------------------------------------------------
@@ -111,14 +127,25 @@ $this->params['breadcrumbs'][] = $this->title;
                         ]); ?>
 
             <?= $form->field($searchModel, 'username')->textInput(['maxlength' => true, 'value'=>$d, 'id'=>'name_id']) ?>
-			<?= $form->field($searchModel, 'mobile')->textInput(['maxlength' => true, 'id'=>'mobile_id']) ?>
+			<?= $form->field($searchModel, 'mobile')->textInput(['maxlength' => true, 'value'=>$mailX, 'id'=>'mobile_id']) ?>
 			<?= $form->field($searchModel, 'address')->textarea(['rows' => 3, 'id'=>'address_id']) ?> 
 
             <div class="form-group">
                 <?= Html::submitButton('Send', ['class' => 'btn btn-success', 'id'=>'submit_id']) ?>
 				
 				
-			<?php echo	"<br><br>" . Html::a('Your Link name','products/action', [
+				<?php
+				//Link to edit the cart, i.e to go to products/shop with $_GET["period"] =  "open-cart",
+				//whick JS trigger openNav();(opens side slide modal with cart) + openCalcSidePagewithCart();  //calc all items in myCore.js -> openCalcSidePagewithCart()
+				 echo "<br><br>";
+				 echo Html::a('Edit your cart', ['/products/shop', 'period' => 'open-cart',], $options = ['title' => 'Edit Cart' ] );
+				 echo Html::a(Html::img('images/edit.png'), ['/products/shop', 'period' => 'open-cart',], $options = ['title' => 'Edit Cart' ] ); //A href with img
+				      
+				?>
+				
+			<?php 
+			   //NOT IN USE????
+			    echo "<br><br>" . Html::a('Your Link name -> Not in USE','products/action', [
                             'title' => Yii::t('yii', 'Close'),
                             'onclick'=>"$('#close').dialog('open');//for jui dialog in my page
                             $.ajax({
@@ -139,10 +166,13 @@ $this->params['breadcrumbs'][] = $this->title;
 			
 			
 			
-	
+	        // Start if  Person is  LOGGED-------
+            // **************************************************************************************
+            // **************************************************************************************
+            //                                                                                     **
             if (!Yii::$app->user->isGuest){
 			
-			// End if  Person is   logged
+			    // End if  Person is   logged
                                                                                              
             } else {  // Start if  Person is  not  logged
 			    echo "<br><br>";
@@ -170,12 +200,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 
-<?php 
+    <?php 
+    $URL = Yii::$app->request->baseUrl . "/index.php?r=products/getajaxorderdata";   //WORKING,  gets the url to send ajax, defining it in  $ajax causes routing to 404, Not found, as the url address does not render correctly
+    //url: 'http://localhost/iShop_yii/yii-basic-app-2.0.15/basic/web/index.php?r=products/getajaxorderdata',  // the correct address sample for ajax
 
-$URL =Yii::$app->request->baseUrl. "/index.php?r=products/getajaxorderdata";   //WORKING,  gets the url to send ajax, defining it in  $ajax causes routing to 404, Not found, as the url address does not render correctly
-//url: 'http://localhost/iShop_yii/yii-basic-app-2.0.15/basic/web/index.php?r=products/getajaxorderdata',  // the correct address sample for ajax
-
-$Controller = Yii::$app->controller->id; // to pass in ajax
+    $Controller = Yii::$app->controller->id; // to pass in ajax
 
 	//My working JS Register
 	//Checks in JS if the Validation runs fine 
@@ -274,7 +303,7 @@ $Controller = Yii::$app->controller->id; // to pass in ajax
                 }
             });
 			// END runs AJAX here
-		    return false; //prevent reloading/submitting
+		    return false; //prevent reloading/submitting the form
 		  
 	   } // end else
   });

@@ -13,8 +13,8 @@ window.productsObject;
 		    var retrievedObject = localStorage.getItem('localStorageObject'); // get Loc Storage item
 			var retrievedObject = JSON.parse(retrievedObject);
 			productsObject = retrievedObject;
-			refreshCartIcon (); // recalc the header cart icon, had to outline it out of ready section, as it was invisible
-			alert ("Loc St exists" + JSON.stringify(productsObject, null, 4) );
+			refreshCartIcon(); // recalc the header cart icon, had to outline it out of ready section, as it was invisible
+			//alert ("Loc St exists" + JSON.stringify(productsObject, null, 4) ); //IMPORTANT ALERT
     } else {
         
 		// if Loc Storage does not exist (i.e Object was never initialized), create a new Object
@@ -252,12 +252,12 @@ $(document).ready(function(){
 	
 	
 	
-	// Calculates the Object sum and refresh the Cart Icon. 
+	// Calculates the Object sum and refresh the Cart Icon.    -MOVED TO a separate js -> refreshCartIcon.js
 	// **************************************************************************************
     // **************************************************************************************
     //                                                                                     ** 
-	
-	function refreshCartIcon () 
+	/*
+	function refreshCartIcon() 
 	{
 		var sum = 0;
 		for (var key in productsObject) {
@@ -280,7 +280,7 @@ $(document).ready(function(){
 		}
 		
 	}
-	
+	*/
 	// **                                                                                  **
     // **************************************************************************************
     // **************************************************************************************

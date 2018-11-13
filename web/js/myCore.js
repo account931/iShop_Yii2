@@ -330,13 +330,14 @@ $(document).ready(function(){
         var finalText = "<div class='container' style='word-wrap: break-word;'>";  // word-wrap: break-word to prevent text overlapping
 		for (var key in productsObject) {
 			
-			var addID = key; // alert (addID);
+			var addID = decodeSpecilalChars(key);//key is an object name(i.e product name) //decodeSpecilalChars()-> Decode "_"(if any in product name) in id name to avoid crashing in js/myCore.js-> plusItemInSideFinalCart(this.id) /minusItemInSideFinalCart(this.id);
+			//decodeSpecilalChars(addID); // Decode "_"(if any in product name) in id name to avoid crashing in js/myCore.js-> plusItemInSideFinalCart(this.id) /minusItemInSideFinalCart(this.id);
 			finalText = finalText + 
 			            "<div class='row'>" +
 						"<div class='col-sm-4 col-xs-2'>" + key + "</div> " +
 						"<div class='col-sm-2 col-xs-2'>" + productsObject[key]['quantity'] + "</div> " +
-						"<div class='col-sm-1 col-xs-2'><button type='button' class='btn btn-success fullCartPlus' id=' "  + addID + "_plus'> + </button></div>" +
-						"<div class='col-sm-1 col-xs-2'><button class='btn btn-danger fullCartMinus'               id=' "  + addID + "_minus'> - </button>" + "</div>" +
+						"<div class='col-sm-1 col-xs-2'><button type='button' class='btn btn-success fullCartPlus' id=' "  + addID + "_plus'>&nbsp; + &nbsp;</button></div>" +  //+button
+						"<div class='col-sm-1 col-xs-2'><button class='btn btn-danger fullCartMinus'               id=' "  + addID + "_minus'>&nbsp; - &nbsp;</button>" + "</div>" + //-button
 						"<div class='col-sm-2 col-xs-2'>" + productsObject[key]['price'] + "</div> " +
 						"<div class='col-sm-2 col-xs-2'>" + substringSum (productsObject[key]['quantity'] * productsObject[key]['price']) +
 						"</div>" +
@@ -354,20 +355,66 @@ $(document).ready(function(){
 	
 	
 	
+	//13Niv Fix
+	//decode productname, if event name has "_" (i.e "Stella_Artua") change it to ("Stella:Artua")
+	// Decode "_"(if any in product name) in id name to avoid crashing in js/myCore.js-> plusItemInSideFinalCart(this.id) /minusItemInSideFinalCart(this.id);
+	// **************************************************************************************
+    // **************************************************************************************
+    //                                                                                     ** 
+	function decodeSpecilalChars(charX){
+	   
+	    if(charX.search("_") > -1){ //if Event has "_"
+		
+		    charX = charX.split('_').join(':');  //repalce all "_" with ":"
+		} else {
+			charX = charX; //no changes
+		}
+		//alert(charX);
+		return charX;
+	}
+	// **                                                                                  **
+    // **************************************************************************************
+    // **************************************************************************************
+	
+	
+	//Is used to decode back product names decoded with {decodeSpecilalChars(charX)}, it decodes back ("Stella:Artois" to "Stella_Artois")
+	// **************************************************************************************
+    // **************************************************************************************
+    //                                                                                     ** 
+	function decodeBack(charX){
+	   
+	    if(charX.search(":") > -1){ //if Event has ":"
+		
+		    charX = charX.split(':').join('_');  //repalce all ":" with "_"
+		} else {
+			charX = charX; //no changes
+		}
+		//alert(charX);
+		return charX;
+	}
+	// **                                                                                  **
+    // **************************************************************************************
+    // **************************************************************************************
+	
+	
+	
+	
+	
+	
 	
 	// Click ++ plus in Final Full Cart from Left
 	// **************************************************************************************
     // **************************************************************************************
     //                                                                                     ** 
 	
-	function plusItemInSideFinalCart (id)
+	function plusItemInSideFinalCart(id)
 	{
 	    //var idm= $("#" +id).val();
 		idArray = id.split("_"); 
-		var productZ = idArray[0]; // get 1st element = product name (from id="product_plus")
+		var productZ = decodeBack(idArray[0]); // get 1st element = product name (from id="product_plus") + decode it back (if product name has ":"), we decode it back to "_",(("Stella:Artois" to "Stella_Artois")), ie if name was previously decoded with {decodeSpecilalChars(charX)}
 		
 		//alert (productZ.trim().length);
-	    productZ = productZ.trim(); // trim product as it get 1 blankspace and cause the creash in nenxt line
+	    productZ = productZ.trim(); // trim product as it get 1 blankspace and cause the crash in next line
 		var pcs = productsObject[productZ]['quantity']; // get quantity from Object
 		++pcs;
 		productsObject[productZ]['quantity'] = pcs; // assing new quantity
@@ -388,14 +435,14 @@ $(document).ready(function(){
     // **************************************************************************************
     //                                                                                     ** 
 	
-	function minusItemInSideFinalCart (id)
+	function minusItemInSideFinalCart(id)
 	{
 	    //var idm= $("#" +id).val();
 		idArray = id.split("_"); 
-		var productZ = idArray[0]; // get 1st element = product name (from id="product_plus")
+		var productZ = decodeBack(idArray[0]); // get 1st element = product name (from id="product_plus") + decode it back (if product name has ":"), we decode it back to "_",(("Stella:Artois" to "Stella_Artois")), ie if name was previously decoded with {decodeSpecilalChars(charX)}
 		
 		//alert (productZ.trim().length);
-	    productZ = productZ.trim(); // trim product as it get 1 blankspace and cause the creash in nenxt line
+	    productZ = productZ.trim(); // trim product as it get 1 blankspace and cause the crash in next line
 		var pcs = productsObject[productZ]['quantity']; // get quantity from Object
 		
 		if (pcs != 1) {

@@ -47,3 +47,14 @@
 
 
 .logout-mine:hover{font-color:yellow; }
+
+
+.smallText{font-size:6px;}
+
+/* Search input */
+#searchProduct{color:black;}
+
+
+/* Fixing z-index overlay for autocomplete */
+.ui-autocomplete { position: absolute; cursor: default;z-index:999930 !important;}
+/* .ui-front { z-index: 9999; } */

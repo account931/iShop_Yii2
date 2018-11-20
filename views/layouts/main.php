@@ -23,6 +23,13 @@ AppAsset::register($this); // register main Asset
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
+	
+	
+	
+	<!--<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>--> <!-- Product Input autocomplete JS UI, autocomplete won't work without it -->
+	<!--<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">--> <!-- Product Input autocomplete CSS UI, autocomplete won't work without it -->
+     
+	 
 	<!--Favicon-->
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
     <?php $this->head() ?>
@@ -179,8 +186,8 @@ AppAsset::register($this); // register main Asset
 
 	  
 	        <!---Search input--->
-	        <a href="" class="menuForm">
-	            <input type="text" class="" placeholder="Search" name="search">
+	        <a href="#" class="menuForm">
+	            <input type="text" class="" placeholder="Search" name="search" id="searchProduct">
                 <button class="" type="submit">
                     <i class="glyphicon glyphicon-search"></i>
                 </button>

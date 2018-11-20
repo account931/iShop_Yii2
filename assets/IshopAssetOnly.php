@@ -27,13 +27,16 @@ class IshopAssetOnly extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
        // 'css/site.css',
-		
-		
+	   '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css',  //CDN autocomplete css
     ];
+	
     public $js = [
 	    'js/modalBox.js', //ishop
 		'js/refreshCartIcon.js', //refreshCartIcon(), must be before 'js/myCore.js'
 		'js/myCore.js', //ishop
+		'https://code.jquery.com/ui/1.12.1/jquery-ui.js', //CDN autocomplete js
+		'js/autocomplete.js', //autocomplete
+		
 		
 	
     ];
@@ -41,4 +44,10 @@ class IshopAssetOnly extends AssetBundle
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
     ];
+	
+	//new
+	//CAUSES CRASH !!!!!!!!
+	//public $jsOptions = ['position' => \yii\web\View::POS_HEAD];
+	
+	
 }

@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 use app\models\Products; //my model for iShop products
+use yii\helpers\Json; //used to pass php var to autocomplete.js
 
 //Register my custom css/js Asset Bundle for this View only(detailed instruction in -> assets/IshopAssetOnly.php)
 use app\assets\IshopAssetOnly; // using my custom asset to use modal.js/mycore.js Only in this View
@@ -25,9 +26,17 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     
-	
-	
-	
+	<?php
+	//------------------------------------------------------------------------------------------------------------
+	//passing PHP object $query(i.e all products array from Controller) to external Js-> autocomplete.js. Requires {use yii\helpers\Json;}
+     /* @var $this yii\web\View */
+    $this->registerJs(
+           "var calenderEvents = ".Json::encode($query).";", 
+           yii\web\View::POS_HEAD, 
+           'calender-events-script'
+     );
+	 //End passing php obj to autocomplete.js-----------------------------------------------------------------------
+    ?>	
 	
 	  <?php
 	//Decide weather to open a modal with Cart(). It happens, when user click link "Cart",
@@ -38,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	 if(Yii::$app->getRequest()->getQueryParam('period') && strcmp(Yii::$app->getRequest()->getQueryParam('period'), 'open-cart') == 0 ) {
      ?>
 		 
-		 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script>
             $(document).ready(function(){
                 openNav();  //opens side slide modal with cart
@@ -65,7 +74,9 @@ $this->params['breadcrumbs'][] = $this->title;
   <a href="#">Contact</a>
   <br><br><p id="fullCartList">V</p>
   <br><p> Total: <span id="totalSumCartFull"> 0 UAH</span></p>
-  <br><br><br><?= Html::a('Check-out the order', ['/products/checkout', 'period' => "",  ],  $options = ['title' => 'Shop', "width"=>"15%", 'class' => 'btn zzz']) ?> 
+  <br><br><br>
+  <?= Html::a('Check-out the order', ['/products/checkout', 'period' => "",  ],  $options = ['title' => 'Shop', "width"=>"", 'class' => 'btn zzz']) ?> 
+  <br><br>
 </div>
 
 <br><!--<br><br>-->
@@ -186,7 +197,7 @@ function closeNav() {
   <div class="modal-contentZ">
     <span class="closeConfirm">&times;</span>
 	<center>
-	<img src="images/cart.png" style="width:30%;"/>
+	<img id="addedImage" src="images/cart.png"/>
 	</center>
     <br><br><p>Order has been added</p><br>
   </div>

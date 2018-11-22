@@ -37,6 +37,10 @@ window.productsObject;
 $(document).ready(function(){
 	
 	
+	//In mobile version we change menu order, we put "Search" field on the top in order it not to be hidden by pop-up keyboard
+	change_MenuOrder_in_Mobile();
+	
+	
 	
 	
 	// Click + button*************
@@ -293,12 +297,13 @@ $(document).ready(function(){
     // **************************************************************************************
     //                                                                                     ** 
 	
-	function substringSum (mySum) 
+	function substringSum(mySum) 
 	{
 		mySum = mySum.toString(); // otherwise indexOf works with strings only
-		if ( mySum.indexOf(".") != -1 ) {  // if float, i.e 13.344444
+		if (mySum.indexOf(".") != -1 ) {  // if float, i.e 13.344444
 			//alert ('subst');
-			mySum = Math.round( parseFloat (mySum) * 100) / 100; //alert (totalArr[1]); // round 13.344444
+			mySum = Math.round(parseFloat (mySum) * 100) / 100; //alert (totalArr[1]); // round 13.344444 to biggest closest, otherwise in some cases we loose 1 kopeks
+			//alert(mySum);
 			totalArr = mySum.toString().split(".");  // devide  13.344444 to totalArr = [13, 344444];
 			
 			totalArr[1] = totalArr[1].substring(0,2); // cut the amount after the dot to 2 symbols only
@@ -328,14 +333,26 @@ $(document).ready(function(){
 	{
 	    //alert(JSON.stringify(productsObject, null, 4)); //to alert OBJECT
         var finalText = "<div class='container' style='word-wrap: break-word;'>";  // word-wrap: break-word to prevent text overlapping
+		finalText +=  "<div class='row smallText'>" +
+						"<div class='col-sm-4 col-xs-3'> Product</div> " +
+						"<div class='col-sm-2 col-xs-1'> P</div> " +
+						
+						"<div class='col-sm-1 col-xs-2'></div>" +  //+button
+						"<div class='col-sm-1 col-xs-2'></div>" + //-button
+						"<div class='col-sm-2 col-xs-2'>Price</div> " +
+						"<div class='col-sm-2 col-xs-2'>Total</div>" +
+						"</div></br>";
+		
+		
 		for (var key in productsObject) {
 			
 			var addID = decodeSpecilalChars(key);//key is an object name(i.e product name) //decodeSpecilalChars()-> Decode "_"(if any in product name) in id name to avoid crashing in js/myCore.js-> plusItemInSideFinalCart(this.id) /minusItemInSideFinalCart(this.id);
 			//decodeSpecilalChars(addID); // Decode "_"(if any in product name) in id name to avoid crashing in js/myCore.js-> plusItemInSideFinalCart(this.id) /minusItemInSideFinalCart(this.id);
 			finalText = finalText + 
 			            "<div class='row'>" +
-						"<div class='col-sm-4 col-xs-2'>" + key + "</div> " +
-						"<div class='col-sm-2 col-xs-2'>" + productsObject[key]['quantity'] + "</div> " +
+						"<div class='col-sm-4 col-xs-3'>" + key + "</div> " +
+						"<div class='col-sm-2 col-xs-1'>" + productsObject[key]['quantity'] + "</div> " +
+						
 						"<div class='col-sm-1 col-xs-2'><button type='button' class='btn btn-success fullCartPlus' id=' "  + addID + "_plus'>&nbsp; + &nbsp;</button></div>" +  //+button
 						"<div class='col-sm-1 col-xs-2'><button class='btn btn-danger fullCartMinus'               id=' "  + addID + "_minus'>&nbsp; - &nbsp;</button>" + "</div>" + //-button
 						"<div class='col-sm-2 col-xs-2'>" + productsObject[key]['price'] + "</div> " +
@@ -474,4 +491,88 @@ $(document).ready(function(){
     // **************************************************************************************
     // **************************************************************************************
 	
+	
+	
+	
+	// onFocus in custom form (VertRows, HorizColumn) in  mobile version scroll the page to input
+	/*
+	$( "#searchProduct" ).focus(function() {
+        if(screen.width <= 640){ //alert("focus");
+		    $("#myTopnav a:last-child").css("margin-bottom", "200px");
+		
+	        scrollResults("#searchProduct"); //scroll the page down to currencies results  //#currencyResult
+	    }
+    });
+	*/
+	
+	
+	
+	 //In mobile version we change menu order, we put "Search" field on the top in order it not to be hidden by pop-up keyboard
+	// **************************************************************************************
+    // **************************************************************************************
+    //                                                                                     ** 
+	 function change_MenuOrder_in_Mobile()
+	 {
+	     if(screen.width <= 640){ 
+		     //var tests = $('#myTopnav');
+             //tests.first().insertAfter(tests.last()); 
+		     $("#searchX").insertBefore($("#pcControl"));    
+	     }
+	 }
+	// **                                                                                  **
+    // **************************************************************************************
+    // **************************************************************************************
+	
+	
+	
+	
+	
+	
+	
+	
+	//=============================== DONOR =======================================================================
+	   
+	 // Scroll the page to results  #resultFinal
+	// **************************************************************************************
+    // **************************************************************************************
+    //                                                                                     ** 
+	function scrollResults(divName, parent)  //arg(DivID, levels to go up from DivID)
+	{   //if 2nd arg is not provided while calling the function with one arg
+		if (typeof(parent)==='undefined') {
+		
+            $('html, body').animate({
+                scrollTop: $(divName).offset().top
+                //scrollTop: $('.your-class').offset().top
+             }, 'slow'); 
+		     // END Scroll the page to results
+		} else {
+			//if 2nd argument is provided
+			var stringX = "$(divName)" + parent + "offset().top";  //i.e constructs -> $("#divID").parent().parent().offset().top
+			$('html, body').animate({
+                scrollTop: eval(stringX)         //eval is must-have, crashes without it
+                }, 'slow'); 
+		}
+	}
+	
+	// **                                                                                  **
+    // **************************************************************************************
+    // **************************************************************************************
+	
+	
+	
+	
+	
+	
+	 // **************************************************************************************
+    // **************************************************************************************
+    //                                                                                     ** 
+	
+	
+	function scroll_toTop() 
+	{
+	    $("html, body").animate({ scrollTop: 0 }, "slow");	
+	}
+	// **                                                                                  **
+    // **************************************************************************************
+    // **************************************************************************************
 	

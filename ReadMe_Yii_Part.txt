@@ -1,3 +1,5 @@
+We stopped updating this reposotory {iShop_Yii2} since 8 Dec 2018. It is reassigned to {iShop_Yii2_Gitted_from_LocalHost}, it is the same folder from localhost, but uses automatic git updating ($ git remote add origin).
+==========================================================================================
 Shop Yii2
 
 1.We use our custom layout design, we changed it in view/layout/main.php. Original Yii layout is stored in main_Original.php. To get the original view - rename main_Original.php to main.php.
